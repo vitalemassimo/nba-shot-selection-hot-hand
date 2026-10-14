@@ -1,6 +1,6 @@
-PY := .venv/bin/python
+PY := PYTHONPATH=src .venv/bin/python
 
-.PHONY: setup test lint all
+.PHONY: setup test lint all data
 setup:  ## create the environment from the lock file
 	python3 -m venv .venv
 	$(PY) -m pip install -r requirements-lock.txt
@@ -11,3 +11,5 @@ lint:
 	$(PY) -m ruff check src tests run_all.py
 all:    ## regenerate every result from raw data
 	$(PY) run_all.py
+data:   ## Stage 2: download raw data (cached; re-runs make no new requests)
+	$(PY) -m hothand.acquire
