@@ -167,6 +167,26 @@ def fetch_players(cfg: dict, manifest: dict) -> None:
                route="A_nba_api", source="stats.nba.com/playerindex")
 
 
+def fetch_player_totals(cfg: dict, manifest: dict) -> None:
+    """Official per-player box-score totals (FGA, FGM), used to audit shot volume in Stage 3."""
+    from nba_api.stats.endpoints import leaguedashplayerstats
+
+    out_dir = RAW / "nba_api" / "totals"
+    out_dir.mkdir(parents=True, exist_ok=True)
+    for season in cfg["data"]["seasons"]:
+        for season_type in cfg["data"]["season_types"]:
+            out = out_dir / f"playertotals_{SEASON_TYPE_CODE[season_type]}_{season}.csv"
+            if not out.exists():
+                payload = _nba_api_json(
+                    leaguedashplayerstats.LeagueDashPlayerStats, cfg,
+                    f"player totals {season} {season_type}", season=season,
+                    season_type_all_star=season_type, per_mode_detailed="Totals",
+                )
+                save_result_set(payload, out)
+            record(manifest, out, kind="player_totals", season=season, season_type=season_type,
+                   route="A_nba_api", source="stats.nba.com/leaguedashplayerstats")
+
+
 ROW_CAP = 102_400  # NBA.com silently truncates a shot-chart response at this many rows
 
 
@@ -220,6 +240,7 @@ def run(cross_check_season: str = "2024-25") -> None:
     try:
         fetch_bulk(cfg, manifest)
         fetch_players(cfg, manifest)
+        fetch_player_totals(cfg, manifest)
         for season_type in cfg["data"]["season_types"]:
             fetch_shots_nba_api(cfg, manifest, cross_check_season, season_type)
     finally:

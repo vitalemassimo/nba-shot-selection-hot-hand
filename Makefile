@@ -1,6 +1,6 @@
 PY := PYTHONPATH=src .venv/bin/python
 
-.PHONY: setup test lint all data verify-data allstars
+.PHONY: setup test lint all data verify-data allstars audit
 setup:  ## create the environment from the lock file
 	python3 -m venv .venv
 	$(PY) -m pip install -r requirements-lock.txt
@@ -17,3 +17,5 @@ verify-data:  ## Stage 2 gate: manifest, volumes, cross-check report
 	$(PY) -m hothand.verify_raw
 allstars:  ## rebuild data/reference/allstars.csv from Wikipedia
 	$(PY) -m hothand.allstars
+audit:  ## Stage 3: audit raw data, clean, write data-quality report
+	$(PY) run_all.py --stage 3

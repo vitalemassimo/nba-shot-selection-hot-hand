@@ -1,0 +1,65 @@
+season,season_type,step,rule,rows_after,rows_removed,content_hash
+2018-19,Regular Season,0,raw,219458,0,
+2018-19,Regular Season,1,drop exact duplicate rows,219458,0,
+2018-19,Regular Season,2,drop duplicate game/event/player keys,219458,0,
+2018-19,Regular Season,3,drop shots with no play-by-play event for the same player,219458,0,80c70e6f3138f260
+2018-19,Playoffs,0,raw,14259,0,
+2018-19,Playoffs,1,drop exact duplicate rows,14259,0,
+2018-19,Playoffs,2,drop duplicate game/event/player keys,14259,0,
+2018-19,Playoffs,3,drop shots with no play-by-play event for the same player,14259,0,d17609756f1392b2
+2019-20,Regular Season,0,raw,188116,0,
+2019-20,Regular Season,1,drop exact duplicate rows,188116,0,
+2019-20,Regular Season,2,drop duplicate game/event/player keys,188116,0,
+2019-20,Regular Season,3,drop shots with no play-by-play event for the same player,188116,0,40c5e62ade7da24a
+2019-20,Playoffs,0,raw,14107,0,
+2019-20,Playoffs,1,drop exact duplicate rows,14107,0,
+2019-20,Playoffs,2,drop duplicate game/event/player keys,14107,0,
+2019-20,Playoffs,3,drop shots with no play-by-play event for the same player,14107,0,3a49108c18d3e1c3
+2020-21,Regular Season,0,raw,190983,0,
+2020-21,Regular Season,1,drop exact duplicate rows,190983,0,
+2020-21,Regular Season,2,drop duplicate game/event/player keys,190983,0,
+2020-21,Regular Season,3,drop shots with no play-by-play event for the same player,190983,0,37e69b955c0f9657
+2020-21,Playoffs,0,raw,14771,0,
+2020-21,Playoffs,1,drop exact duplicate rows,14771,0,
+2020-21,Playoffs,2,drop duplicate game/event/player keys,14771,0,
+2020-21,Playoffs,3,drop shots with no play-by-play event for the same player,14771,0,899e76b0c4b01926
+2021-22,Regular Season,0,raw,216722,0,
+2021-22,Regular Season,1,drop exact duplicate rows,216722,0,
+2021-22,Regular Season,2,drop duplicate game/event/player keys,216722,0,
+2021-22,Regular Season,3,drop shots with no play-by-play event for the same player,216722,0,b9b055f9bd903baf
+2021-22,Playoffs,0,raw,14571,0,
+2021-22,Playoffs,1,drop exact duplicate rows,14571,0,
+2021-22,Playoffs,2,drop duplicate game/event/player keys,14571,0,
+2021-22,Playoffs,3,drop shots with no play-by-play event for the same player,14571,0,33b183bcb95e7dd6
+2022-23,Regular Season,0,raw,217218,0,
+2022-23,Regular Season,1,drop exact duplicate rows,217218,0,
+2022-23,Regular Season,2,drop duplicate game/event/player keys,217218,0,
+2022-23,Regular Season,3,drop shots with no play-by-play event for the same player,217216,2,3dfd6bac3eac29cc
+2022-23,Playoffs,0,raw,14651,0,
+2022-23,Playoffs,1,drop exact duplicate rows,14651,0,
+2022-23,Playoffs,2,drop duplicate game/event/player keys,14651,0,
+2022-23,Playoffs,3,drop shots with no play-by-play event for the same player,14651,0,db206fb4ffe6f30b
+2023-24,Regular Season,0,raw,218701,0,
+2023-24,Regular Season,1,drop exact duplicate rows,218701,0,
+2023-24,Regular Season,2,drop duplicate game/event/player keys,218701,0,
+2023-24,Regular Season,3,drop shots with no play-by-play event for the same player,218700,1,8e3a4f7936603e2e
+2023-24,Playoffs,0,raw,13840,0,
+2023-24,Playoffs,1,drop exact duplicate rows,13840,0,
+2023-24,Playoffs,2,drop duplicate game/event/player keys,13840,0,
+2023-24,Playoffs,3,drop shots with no play-by-play event for the same player,13840,0,998eedb9c446dd44
+2024-25,Regular Season,0,raw,219527,0,
+2024-25,Regular Season,1,drop exact duplicate rows,219527,0,
+2024-25,Regular Season,2,drop duplicate game/event/player keys,219527,0,
+2024-25,Regular Season,3,drop shots with no play-by-play event for the same player,219526,1,bc57d40b40bff577
+2024-25,Playoffs,0,raw,14377,0,
+2024-25,Playoffs,1,drop exact duplicate rows,14377,0,
+2024-25,Playoffs,2,drop duplicate game/event/player keys,14377,0,
+2024-25,Playoffs,3,drop shots with no play-by-play event for the same player,14377,0,07297b3bd11e2906
+2025-26,Regular Season,0,raw,219160,0,
+2025-26,Regular Season,1,drop exact duplicate rows,219160,0,
+2025-26,Regular Season,2,drop duplicate game/event/player keys,219160,0,
+2025-26,Regular Season,3,drop shots with no play-by-play event for the same player,219156,4,8cca5fd1047cc88a
+2025-26,Playoffs,0,raw,14473,0,
+2025-26,Playoffs,1,drop exact duplicate rows,14473,0,
+2025-26,Playoffs,2,drop duplicate game/event/player keys,14473,0,
+2025-26,Playoffs,3,drop shots with no play-by-play event for the same player,14473,0,baa8eaa8ea6cb911

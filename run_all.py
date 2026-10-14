@@ -5,8 +5,17 @@ Stages that are not implemented yet are skipped with a message.
 """
 
 import argparse
+import subprocess
+import sys
 
-from hothand.config import load_config
+from hothand import acquire
+from hothand.config import ROOT, load_config
+
+
+def run_notebook(name: str) -> None:
+    """Execute a notebook in place, so its outputs and the files it writes are regenerated."""
+    subprocess.run([sys.executable, "-m", "jupyter", "nbconvert", "--to", "notebook", "--execute",
+                    "--inplace", name], cwd=ROOT / "notebooks", check=True)
 
 STAGES = {
     2: "acquire",
@@ -15,6 +24,11 @@ STAGES = {
     5: "core_test",
     6: "segments",
     7: "robustness",
+}
+
+RUNNERS = {
+    2: acquire.run,
+    3: lambda: run_notebook("02_audit.ipynb"),
 }
 
 
@@ -28,7 +42,11 @@ def main() -> None:
     for n, name in STAGES.items():
         if args.stage and n != args.stage:
             continue
-        print(f"Stage {n} ({name}): not implemented yet, skipped")
+        if n in RUNNERS:
+            print(f"Stage {n} ({name}): running")
+            RUNNERS[n]()
+        else:
+            print(f"Stage {n} ({name}): not implemented yet, skipped")
 
 
 if __name__ == "__main__":

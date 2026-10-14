@@ -105,3 +105,48 @@ result is negligible (1 in 233,904 shots).
 Every selected player counts, including injured selections and their replacements.
 **Reason.** Citable and versioned. All-Star status is only a labelled subset (D-009), never a test
 variable, so small roster-definition differences cannot move a pre-registered result.
+
+### D-017 · 2026-10-15 · Shot order comes from the play-by-play file order, not event numbers
+**Finding.** Sorting a player's shots by event number sends the game clock backwards 500-770 times per
+regular season. Example: 2024-25 game 0022400002, event 329 (a missed tip at 1:39 of Q2) was
+numbered after event 326 (0:03 of Q2). Event numbers are sometimes assigned late (corrections).
+In the play-by-play file's row order, the clock never runs backwards (0 cases in all 16 files).
+**Decision.** Order shots within a game by the play-by-play file position (`pbp_row`), which
+agrees with the game clock. The clock (with tenths of a second) comes from the play-by-play.
+**Why it matters.** The unit of analysis is a pair of consecutive shots; a wrong order would build
+wrong pairs and attach wrong "previous shot" results.
+
+### D-018 · 2026-10-15 · 2025-26 recording change for end-of-quarter heaves
+**Finding.** In 2025-26 the play-by-play has 1,093 team-level "Heave" events (e.g. "NETS Heave"),
+a type absent in earlier seasons, and player-credited shots from 36+ ft in the last 3 seconds of
+Q1-Q3 fall from 500-650 per season to 49, of which 53% are makes (2-4% in earlier seasons).
+Official box-score FGA totals still match the shot table exactly, so missed end-of-quarter heaves
+are no longer counted as a player's field-goal attempt from 2025-26.
+**Decision (Stage 3).** No change to the cleaned data: the shot table is kept as published.
+**Decision (deferred to Stage 4, fixed before analysis).** Heaves must be treated identically in
+every season, otherwise 2025-26 differs mechanically. Stage 4 excludes shots matching the
+2025-26 pattern (36+ ft, last 3 s of Q1-Q3, made or missed) from every season, and a heave also
+breaks a pair rather than being silently skipped. Exact thresholds go into config.yaml then.
+
+### D-019 · 2026-10-15 · Drop 8 shots with conflicting shooter attribution
+**Finding.** 8 shots out of 1,804,934 (all seasons) either have no play-by-play event with the same
+game and event number, or the play-by-play names a different player (e.g. shot table: Rudy Gay,
+play-by-play: Markkanen). One 2025-26 case maps to a team "Heave" event.
+**Decision.** Drop them in structural cleaning (counted in the attrition table).
+**Reason.** They cannot be placed in the event sequence with confidence, so any pair built on them
+could be wrong. 8 shots cannot move any result.
+
+### D-020 · 2026-10-15 · Shots on the three-point line: zone vs shot type
+**Finding.** 1-210 shots per file (21.9-24.0 ft from the basket) have a location zone that disagrees
+with the scorer's 2-or-3-point ruling (e.g. zone "Above the Break 3", shot type "2PT").
+**Decision.** Keep both columns as published. Shot value (2 or 3) follows the scorer's ruling;
+the zone outcome uses the published zone. Stated in the data dictionary.
+**Reason.** Both are official; the disagreement is a line call, affects <0.1% of shots, and
+relabelling would be a judgement made after looking at data.
+
+### D-021 · 2026-10-15 · Games in scope
+**Finding.** The data contains only regular-season (game ID type 2) and playoff (type 4) games:
+no play-in games (type 5) and no NBA Cup final (type 6, which does not count in the standings).
+Game counts match the real schedules (1,230 per season; 1,059 in 2019-20; 1,080 in 2020-21).
+**Decision.** Keep this scope. Play-in games are neither regular season nor playoffs, so they are
+out of scope for H4 anyway.

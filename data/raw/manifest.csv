@@ -41,3 +41,19 @@ nba_api/players/playerindex_2024-25.csv,players,2024-25,,A_nba_api,stats.nba.com
 nba_api/players/playerindex_2025-26.csv,players,2025-26,,A_nba_api,stats.nba.com/playerindex,2026-10-14,582,2fd92d3cf42f87b99dcc1b259ccabb671bff32f63fd2ac8f078185c0c4e4633b
 nba_api/shots/shotchart_po_2024-25.csv,shots,2024-25,Playoffs,A_nba_api,stats.nba.com/shotchartdetail (per team),2026-10-15,14377,7dde4bbcb76278159fbc6b3a87f880424924861d2b9fcbbc29ae9bc985718f32
 nba_api/shots/shotchart_rs_2024-25.csv,shots,2024-25,Regular Season,A_nba_api,stats.nba.com/shotchartdetail (per team),2026-10-15,219527,f3c09f8c967b6de119bdb13345fd42e55deb7739bed566d98a8ef01b41e4a4f4
+nba_api/totals/playertotals_po_2018-19.csv,player_totals,2018-19,Playoffs,A_nba_api,stats.nba.com/leaguedashplayerstats,2026-10-15,212,8d153ece086bcd0081c6645125b489e4c42549a3e101e334f76c16927cc56ab4
+nba_api/totals/playertotals_po_2019-20.csv,player_totals,2019-20,Playoffs,A_nba_api,stats.nba.com/leaguedashplayerstats,2026-10-15,217,794163f6c64a90f8927cb41d5f555b71e850189fac5e1124b6b11a63025a7fb8
+nba_api/totals/playertotals_po_2020-21.csv,player_totals,2020-21,Playoffs,A_nba_api,stats.nba.com/leaguedashplayerstats,2026-10-15,239,eb31976b07a8ea0bfccded9994ca88e8c35339ecb0034c5f2d164963025e8501
+nba_api/totals/playertotals_po_2021-22.csv,player_totals,2021-22,Playoffs,A_nba_api,stats.nba.com/leaguedashplayerstats,2026-10-15,217,b6eb9720c0dcc790bcf68a98dd07786c16def1694e5414c9da77023b9d276e2b
+nba_api/totals/playertotals_po_2022-23.csv,player_totals,2022-23,Playoffs,A_nba_api,stats.nba.com/leaguedashplayerstats,2026-10-15,217,4ee733c7c8e5c0fb786876d329f26cb7068c4735ccab2a724708549c33ed4a2d
+nba_api/totals/playertotals_po_2023-24.csv,player_totals,2023-24,Playoffs,A_nba_api,stats.nba.com/leaguedashplayerstats,2026-10-15,214,3e783faf52014e3fbc06c40adfebf8cbde8ffff6a179481599d698cc8472f880
+nba_api/totals/playertotals_po_2024-25.csv,player_totals,2024-25,Playoffs,A_nba_api,stats.nba.com/leaguedashplayerstats,2026-10-15,219,c1241a9f85580c03d234ee125fc39f8f7c096e00803a8b32bc3fcfac963eec3c
+nba_api/totals/playertotals_po_2025-26.csv,player_totals,2025-26,Playoffs,A_nba_api,stats.nba.com/leaguedashplayerstats,2026-10-15,230,ab5827411f6f19144e41cf4bbe6110b4d89fa2a660b837fdba947ab77d1437cc
+nba_api/totals/playertotals_rs_2018-19.csv,player_totals,2018-19,Regular Season,A_nba_api,stats.nba.com/leaguedashplayerstats,2026-10-15,530,4ffed87273a1627f53ffb9417e5f09a36f5aa69c2383172d755843facb1d7120
+nba_api/totals/playertotals_rs_2019-20.csv,player_totals,2019-20,Regular Season,A_nba_api,stats.nba.com/leaguedashplayerstats,2026-10-15,529,c0235d8ccb450a1b3d6766882b14a78a89c8a892e3802a4e860016017ea89ce8
+nba_api/totals/playertotals_rs_2020-21.csv,player_totals,2020-21,Regular Season,A_nba_api,stats.nba.com/leaguedashplayerstats,2026-10-15,540,b32470199f15c43a8b04c363988cca47058220f28fcbee1c52b4f248be8580d5
+nba_api/totals/playertotals_rs_2021-22.csv,player_totals,2021-22,Regular Season,A_nba_api,stats.nba.com/leaguedashplayerstats,2026-10-15,605,a87ca81cea6df092af2c4d7725af5d0b1c382c7df10f36fde1b00da0311e3b1d
+nba_api/totals/playertotals_rs_2022-23.csv,player_totals,2022-23,Regular Season,A_nba_api,stats.nba.com/leaguedashplayerstats,2026-10-15,539,7204476a4d76d33bc0b8e76f8f956b586be8e945cde29c24b314c8530c680a6a
+nba_api/totals/playertotals_rs_2023-24.csv,player_totals,2023-24,Regular Season,A_nba_api,stats.nba.com/leaguedashplayerstats,2026-10-15,572,ff09e1c4c2307a8c232b0ddabbf23b0cc1df5c45f626a8c6e93c8b93a8886ace
+nba_api/totals/playertotals_rs_2024-25.csv,player_totals,2024-25,Regular Season,A_nba_api,stats.nba.com/leaguedashplayerstats,2026-10-15,569,aed59dbf2a63a691be164bd5522bf1f2e80e768850b4125834fb29f3363ad150
+nba_api/totals/playertotals_rs_2025-26.csv,player_totals,2025-26,Regular Season,A_nba_api,stats.nba.com/leaguedashplayerstats,2026-10-15,582,fa1e973b557f5b07a3859b36a011b5a19ff7afd477d3896b977c3ba343a7167b
