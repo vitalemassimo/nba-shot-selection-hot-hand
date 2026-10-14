@@ -1,0 +1,43 @@
+file,kind,season,season_type,route,source,retrieved,rows,sha256
+bulk/nbastatsv3_2018.csv,pbp,2018-19,Regular Season,B_bulk,shufinskiy/nba_data:nbastatsv3_2018,2026-10-14,613435,a963048187d02e184348d556d315bd743476c76375e5667da9b8ab52d4e868f5
+bulk/nbastatsv3_2019.csv,pbp,2019-20,Regular Season,B_bulk,shufinskiy/nba_data:nbastatsv3_2019,2026-10-14,530495,64e726c5113bf99d0a30e8f337005b647bef520a0ee305b5f1bf5f8e596e1e2d
+bulk/nbastatsv3_2020.csv,pbp,2020-21,Regular Season,B_bulk,shufinskiy/nba_data:nbastatsv3_2020,2026-10-14,526268,5aa5bea5e60f3eed234da412c2bffc7d5fc5cc45e98d32d8db0baf84396d1d66
+bulk/nbastatsv3_2021.csv,pbp,2021-22,Regular Season,B_bulk,shufinskiy/nba_data:nbastatsv3_2021,2026-10-14,600718,3508da67c849ce51ba086a541080519b8247467fdc5abc701619a3a279de4b35
+bulk/nbastatsv3_2022.csv,pbp,2022-23,Regular Season,B_bulk,shufinskiy/nba_data:nbastatsv3_2022,2026-10-14,603785,937731b9b6949bb78022a1a4bb4a96a21bc04fabd4f730f1bc21d10ee36ab263
+bulk/nbastatsv3_2023.csv,pbp,2023-24,Regular Season,B_bulk,shufinskiy/nba_data:nbastatsv3_2023,2026-10-14,598705,76f09621b96f1ddf3e026324cd505a67f57d78d7e94f229ffdb6775d734b5bff
+bulk/nbastatsv3_2024.csv,pbp,2024-25,Regular Season,B_bulk,shufinskiy/nba_data:nbastatsv3_2024,2026-10-14,606538,90e1eae98ecc45050c117904fd53354ab5e04cc5ea19f4778958fe9c8c2104eb
+bulk/nbastatsv3_2025.csv,pbp,2025-26,Regular Season,B_bulk,shufinskiy/nba_data:nbastatsv3_2025,2026-10-14,621887,142c2986043b0407b30857e0c8980726c4a5aff2eabdaf16651691de0c20e832
+bulk/nbastatsv3_po_2018.csv,pbp,2018-19,Playoffs,B_bulk,shufinskiy/nba_data:nbastatsv3_po_2018,2026-10-14,41012,73619d51eba40229e87c1d5474f6b44d84b2f3018f802e5f68056850fd384fc4
+bulk/nbastatsv3_po_2019.csv,pbp,2019-20,Playoffs,B_bulk,shufinskiy/nba_data:nbastatsv3_po_2019,2026-10-14,40576,9abccc0bf44c7637e0468cb8a8c80ef1f4d71aaa4f4cf02dc5e5f4d2b7367220
+bulk/nbastatsv3_po_2020.csv,pbp,2020-21,Playoffs,B_bulk,shufinskiy/nba_data:nbastatsv3_po_2020,2026-10-14,40940,810bb6fcff73dd456474b70974807785c85a365a21b791481fcdf22890cabbd6
+bulk/nbastatsv3_po_2021.csv,pbp,2021-22,Playoffs,B_bulk,shufinskiy/nba_data:nbastatsv3_po_2021,2026-10-14,41759,2f36b5435a55db8edee3fb66beffda14b7c6be11dd4ad47ec45953c7be0f1572
+bulk/nbastatsv3_po_2022.csv,pbp,2022-23,Playoffs,B_bulk,shufinskiy/nba_data:nbastatsv3_po_2022,2026-10-14,40163,fcd06eb4e6f60edc6ab5414dd7facbeab27394a86c4c02a6dc53aafe09b27401
+bulk/nbastatsv3_po_2023.csv,pbp,2023-24,Playoffs,B_bulk,shufinskiy/nba_data:nbastatsv3_po_2023,2026-10-14,38307,a722289c711b63d47d7beb7e769f30895185a4c4c4ecc5794d603a4565f12e72
+bulk/nbastatsv3_po_2024.csv,pbp,2024-25,Playoffs,B_bulk,shufinskiy/nba_data:nbastatsv3_po_2024,2026-10-14,41772,7c56f14da363e397bbae79979aa0c1d6797c9ed4098289f4b3c6cbddfb1369c3
+bulk/nbastatsv3_po_2025.csv,pbp,2025-26,Playoffs,B_bulk,shufinskiy/nba_data:nbastatsv3_po_2025,2026-10-14,43289,0dd9a89e44c9b92026eb2fad2f5371b00fa650d8b6745184974fc2e1acd12812
+bulk/shotdetail_2018.csv,shots,2018-19,Regular Season,B_bulk,shufinskiy/nba_data:shotdetail_2018,2026-10-14,219458,8852647d75136876c031e89196ae5e2d61941a809684776dee8dc3604123ff7a
+bulk/shotdetail_2019.csv,shots,2019-20,Regular Season,B_bulk,shufinskiy/nba_data:shotdetail_2019,2026-10-14,188116,53c5b7f60acdb3cd3e98838cdbece71d7638b71e66534f43203f6a8aab62a498
+bulk/shotdetail_2020.csv,shots,2020-21,Regular Season,B_bulk,shufinskiy/nba_data:shotdetail_2020,2026-10-14,190983,1d044fce2450d86697cd7ddbb08bcc2e40b7d95d824aca088867671dfefff1b9
+bulk/shotdetail_2021.csv,shots,2021-22,Regular Season,B_bulk,shufinskiy/nba_data:shotdetail_2021,2026-10-14,216722,cabe989ede9429a9ca4c3c350a90fd009f5f982a0a78bd79dbd2f8c85cc3dba2
+bulk/shotdetail_2022.csv,shots,2022-23,Regular Season,B_bulk,shufinskiy/nba_data:shotdetail_2022,2026-10-14,217218,2260b161584dd95ad3008449da55ccbe73aed395e89e2e0df1f5a00ea37443f1
+bulk/shotdetail_2023.csv,shots,2023-24,Regular Season,B_bulk,shufinskiy/nba_data:shotdetail_2023,2026-10-14,218701,901cb68c124598594594c4cc87f177a4c41e2662561b387faa153b1537e21e52
+bulk/shotdetail_2024.csv,shots,2024-25,Regular Season,B_bulk,shufinskiy/nba_data:shotdetail_2024,2026-10-14,219527,c90c502e12077a3f34f5b54b341727e6558bd97841fb07d885ca934465564484
+bulk/shotdetail_2025.csv,shots,2025-26,Regular Season,B_bulk,shufinskiy/nba_data:shotdetail_2025,2026-10-14,219160,496e73886e0f8a1bc565a30c4f915d3a140ddd39b701c8959fe5e631d9cc0706
+bulk/shotdetail_po_2018.csv,shots,2018-19,Playoffs,B_bulk,shufinskiy/nba_data:shotdetail_po_2018,2026-10-14,14259,6a21d8e1d717e399efa957b1ca12a68b6aea5c271bf05009e6f5d753c24ca34a
+bulk/shotdetail_po_2019.csv,shots,2019-20,Playoffs,B_bulk,shufinskiy/nba_data:shotdetail_po_2019,2026-10-14,14107,2ddddba7c24e16804680d7f5b2219561f1d699b9bdcb7b6414b6b2673dabafb8
+bulk/shotdetail_po_2020.csv,shots,2020-21,Playoffs,B_bulk,shufinskiy/nba_data:shotdetail_po_2020,2026-10-14,14771,741fe7a9a1f84ddae1fb4626bfbf0b213a760c126174d8c11547091d8662cd60
+bulk/shotdetail_po_2021.csv,shots,2021-22,Playoffs,B_bulk,shufinskiy/nba_data:shotdetail_po_2021,2026-10-14,14571,55872513fef13d526910e3dce7d03dc3f5e2ffe3a681679eacd71169a17fa9ee
+bulk/shotdetail_po_2022.csv,shots,2022-23,Playoffs,B_bulk,shufinskiy/nba_data:shotdetail_po_2022,2026-10-14,14651,e0efafc72ae4e6e6268d2ead7f4b94d016783507713f8c2423504d20df54d0d8
+bulk/shotdetail_po_2023.csv,shots,2023-24,Playoffs,B_bulk,shufinskiy/nba_data:shotdetail_po_2023,2026-10-14,13840,eed0d412ddc1bbcba438e2bc464634e949d28bdc0fe50d6cc5c1dbfae06f5a3e
+bulk/shotdetail_po_2024.csv,shots,2024-25,Playoffs,B_bulk,shufinskiy/nba_data:shotdetail_po_2024,2026-10-14,14377,39f6958ba7d199461c40ab71c42b72a25344eaaabeb3ca1aad7fb72c42c54c32
+bulk/shotdetail_po_2025.csv,shots,2025-26,Playoffs,B_bulk,shufinskiy/nba_data:shotdetail_po_2025,2026-10-14,14473,eba0e2e31a281dae3f8f27ef94e6b39f8e3c9d96cdef81b135c9e7ca60c0c169
+nba_api/players/playerindex_2018-19.csv,players,2018-19,,A_nba_api,stats.nba.com/playerindex,2026-10-14,133,2f9aeb00380c95e93273cc36a432e800b4c98bfd2fc1f7d5db0c8b6f7c54b7a4
+nba_api/players/playerindex_2019-20.csv,players,2019-20,,A_nba_api,stats.nba.com/playerindex,2026-10-14,109,afe292ebd41c28a2a7a1e5754e9f21f06430544e34b3b2fe11dec8e04acf8b20
+nba_api/players/playerindex_2020-21.csv,players,2020-21,,A_nba_api,stats.nba.com/playerindex,2026-10-14,108,81a3755a7c2a3bcaed601f1f0bc30258e42d145ceede7802b4fd09c00fe62d63
+nba_api/players/playerindex_2021-22.csv,players,2021-22,,A_nba_api,stats.nba.com/playerindex,2026-10-14,173,e7a45f0a6ca3012f5d87824e3a6fd4de4dfc53ceb4e69f763c31c4b09c404fc9
+nba_api/players/playerindex_2022-23.csv,players,2022-23,,A_nba_api,stats.nba.com/playerindex,2026-10-14,98,916df8ef3611b80f71ea05d56b288cbeb562a54e278e1491d3b312433f29bce6
+nba_api/players/playerindex_2023-24.csv,players,2023-24,,A_nba_api,stats.nba.com/playerindex,2026-10-14,137,35afecf444c2b97723b17fb32ec8bd421b5081c3aca67511d24639a518a0345b
+nba_api/players/playerindex_2024-25.csv,players,2024-25,,A_nba_api,stats.nba.com/playerindex,2026-10-14,133,3d0f30ff1f185b1c87a1dad568573937ba2c75cd5b435f7ce12764bfdce0787d
+nba_api/players/playerindex_2025-26.csv,players,2025-26,,A_nba_api,stats.nba.com/playerindex,2026-10-14,582,2fd92d3cf42f87b99dcc1b259ccabb671bff32f63fd2ac8f078185c0c4e4633b
+nba_api/shots/shotchart_po_2024-25.csv,shots,2024-25,Playoffs,A_nba_api,stats.nba.com/shotchartdetail (per team),2026-10-15,14377,7dde4bbcb76278159fbc6b3a87f880424924861d2b9fcbbc29ae9bc985718f32
+nba_api/shots/shotchart_rs_2024-25.csv,shots,2024-25,Regular Season,A_nba_api,stats.nba.com/shotchartdetail (per team),2026-10-15,219527,f3c09f8c967b6de119bdb13345fd42e55deb7739bed566d98a8ef01b41e4a4f4

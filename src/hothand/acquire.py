@@ -167,22 +167,46 @@ def fetch_players(cfg: dict, manifest: dict) -> None:
                route="A_nba_api", source="stats.nba.com/playerindex")
 
 
-def fetch_shots_nba_api(cfg: dict, manifest: dict, season: str, season_type: str) -> None:
-    """All league field-goal attempts for one season and type (cross-check route)."""
-    from nba_api.stats.endpoints import shotchartdetail
+ROW_CAP = 102_400  # NBA.com silently truncates a shot-chart response at this many rows
 
+
+def fetch_shots_nba_api(cfg: dict, manifest: dict, season: str, season_type: str) -> None:
+    """All league field-goal attempts for one season and type (cross-check route).
+
+    A league-wide request is truncated at ROW_CAP rows, so shots are pulled one team at a time
+    (each part cached on disk) and concatenated.
+    """
+    from nba_api.stats.endpoints import shotchartdetail
+    from nba_api.stats.static import teams
+
+    code = SEASON_TYPE_CODE[season_type]
     out_dir = RAW / "nba_api" / "shots"
-    out_dir.mkdir(parents=True, exist_ok=True)
-    out = out_dir / f"shotchart_{SEASON_TYPE_CODE[season_type]}_{season}.csv"
+    parts_dir = out_dir / f"parts_{code}_{season}"
+    parts_dir.mkdir(parents=True, exist_ok=True)
+    out = out_dir / f"shotchart_{code}_{season}.csv"
     if not out.exists():
-        payload = _nba_api_json(
-            shotchartdetail.ShotChartDetail, cfg, f"shotchart {season} {season_type}",
-            team_id=0, player_id=0, season_nullable=season,
-            season_type_all_star=season_type, context_measure_simple="FGA",
-        )
-        save_result_set(payload, out, "Shot_Chart_Detail")
+        parts = []
+        for team in sorted(teams.get_teams(), key=lambda t: t["id"]):
+            part = parts_dir / f"team_{team['id']}.csv"
+            if not part.exists():
+                payload = _nba_api_json(
+                    shotchartdetail.ShotChartDetail, cfg,
+                    f"shotchart {season} {season_type} {team['abbreviation']}",
+                    team_id=team["id"], player_id=0, season_nullable=season,
+                    season_type_all_star=season_type, context_measure_simple="FGA",
+                )
+                save_result_set(payload, part, "Shot_Chart_Detail")
+            if count_csv_rows(part) >= ROW_CAP:
+                raise RuntimeError(f"{part} hit the {ROW_CAP}-row cap; split it further")
+            parts.append(part)
+        header, body = None, []
+        for part in parts:
+            lines = part.read_text().splitlines(keepends=True)
+            header = header or lines[0]
+            body.extend(lines[1:])
+        out.write_text(header + "".join(body))
     record(manifest, out, kind="shots", season=season, season_type=season_type,
-           route="A_nba_api", source="stats.nba.com/shotchartdetail")
+           route="A_nba_api", source="stats.nba.com/shotchartdetail (per team)")
 
 
 # ---------- entry point ----------

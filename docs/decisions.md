@@ -79,3 +79,29 @@ standard errors clustered by player.
 **Decision.** The headline survives if its sign is unchanged and its 95% CI overlaps the baseline
 estimate in at least 80% of the Stage 7 variations.
 **Reason.** Fixed before running any variation, so the bar cannot move after seeing results.
+
+### D-013 · 2026-10-15 · Bulk dataset covers the whole window
+**Decision.** All 8 seasons (regular season and playoffs) of shot details and play-by-play
+(`nbastatsv3`) come from the bulk dataset. nba_api is used for the player table and the cross-check.
+**Reason.** The bulk index lists `shotdetail_2025` and `nbastatsv3_2025` (season 2025-26), so the
+playbook's open item "does the bulk dataset cover 2025-26?" resolves to yes. One source for all
+seasons avoids mixing collection methods.
+
+### D-014 · 2026-10-15 · NBA.com league-wide shot requests are truncated
+**Finding.** A league-wide `ShotChartDetail` request for 2024-25 regular season returned exactly
+102,400 rows (the bulk file has 219,527). The endpoint silently caps responses.
+**Decision.** Pull nba_api shots one team at a time and concatenate; fail loudly if any part hits the cap.
+
+### D-015 · 2026-10-15 · Cross-check result and one disagreeing shot
+**Finding.** 2024-25 (regular season and playoffs, 233,904 shots) matches one-to-one between routes
+on game ID, event ID and player ID, with identical made flags. One shot differs in location:
+game 22401194, event 653, Cam Spencer: bulk 26 ft / Above the Break 3, NBA.com 22 ft / Mid-Range.
+**Decision.** Keep the bulk value, so every season comes from the same source. Effect on any
+result is negligible (1 in 233,904 shots).
+
+### D-016 · 2026-10-15 · All-Star source
+**Decision.** All-Star selections come from the "Rosters" section of each Wikipedia
+`<YEAR>_NBA_All-Star_Game` page (page revision ids stored in `data/reference/allstars.csv`).
+Every selected player counts, including injured selections and their replacements.
+**Reason.** Citable and versioned. All-Star status is only a labelled subset (D-009), never a test
+variable, so small roster-definition differences cannot move a pre-registered result.
