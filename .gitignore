@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+.pytest_cache/
+.ruff_cache/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Data: raw and interim are never committed (NBA.com Terms of Use)
+data/raw/*
+!data/raw/.gitkeep
+!data/raw/manifest.csv
+data/interim/*
+!data/interim/.gitkeep
+# processed: only small result tables are committed, large feature tables are not
+data/processed/*.parquet
+
+# OS / editors
+.DS_Store
+.vscode/
+.idea/

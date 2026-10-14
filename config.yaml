@@ -1,0 +1,56 @@
+# Every tunable value in the project lives here. No magic numbers in notebooks or src/.
+# Each value is justified in docs/decisions.md. Changing a value after Stage 4 needs a logged reason.
+
+random_seed: 20261014
+
+data:
+  seasons: ["2018-19", "2019-20", "2020-21", "2021-22", "2022-23", "2023-24", "2024-25", "2025-26"]
+  season_types: ["Regular Season", "Playoffs"]
+  flagged_seasons:            # kept in the sample, carried as a flag column (decision D-003)
+    "2019-20": "bubble_playoffs"
+    "2020-21": "shortened_schedule"
+  # Approximate expected field-goal attempts per season, used only as a sanity range (Stage 2.6)
+  expected_fga:
+    regular_season: [150000, 240000]
+    playoffs: [8000, 25000]
+  nba_api:
+    timeout_seconds: 60
+    sleep_between_requests_seconds: 1.5
+    max_retries: 5
+    backoff_base_seconds: 4
+
+pairs:
+  max_gap_game_seconds: 240     # max game-clock seconds between two shots to count as a pair (D-006)
+  same_period_only: false       # primary spec allows pairs across a period break; tested in Stage 7
+
+segments:
+  veteran_min_season_number: 5  # veteran = 5th NBA season or later (D-008)
+  usage_min_fga_season: 100     # min FGA in a player-season to enter usage tiers
+  usage_tiers: 3                # tertiles of FGA per game within season
+  cluster_min_fga_season: 200   # min FGA in a player-season to enter clustering
+  cluster_k_candidates: [3, 4, 5, 6, 7]
+  cluster_stability_seeds: 20
+  cluster_bootstrap_resamples: 100
+
+split:
+  calibration_fraction: 0.5     # games (not shots) assigned at random to calibration vs analysis
+
+xfg:
+  features: ["shot_distance", "shot_zone_basic", "shot_type", "action_type", "shot_angle"]
+  # Never include the previous shot's result as a feature.
+
+inference:
+  n_permutations: 1000
+  alpha: 0.05
+  min_players_per_cell: 30
+  min_pairs_per_cell: 2000
+  multiple_testing: "holm"      # applied across the H1-H4 family on next-shot distance
+
+robustness:
+  pair_gap_variants_seconds: [60, 120, 240, 480, null]   # null = no limit
+  min_fga_variants: [50, 100, 200]
+  heave_seconds_remaining: 3    # shots in the last N seconds of a period are "heaves"
+  garbage_time_margin: 20       # |score margin| >= this in the 4th quarter = garbage time
+  garbage_time_minutes_left: 5
+  # Survival rule (D-012): sign unchanged AND CI overlaps baseline estimate in >= 80% of variations
+  survival_share: 0.8
