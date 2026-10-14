@@ -117,7 +117,7 @@ def fetch_bulk(cfg: dict, manifest: dict) -> None:
                         continue
                     url = index[name]
                     log.info("downloading %s", url)
-                    blob = with_retries(lambda: urllib.request.urlopen(url, timeout=300).read(),
+                    blob = with_retries(lambda u=url: urllib.request.urlopen(u, timeout=300).read(),
                                         cfg, name)
                     with tarfile.open(fileobj=io.BytesIO(blob), mode="r:xz") as tar:
                         member = tar.getmember(f"{name}.csv")

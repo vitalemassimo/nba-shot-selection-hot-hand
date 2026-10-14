@@ -76,27 +76,27 @@ def main() -> int:
         f"**Gate status: {'PASS' if ok else 'FAIL'}**",
         "",
         "## Manifest integrity",
-        f"{len(integrity)} files; rows match manifest: {integrity.rows_match.all()}; "
-        f"hashes match: {integrity.hash_match.all()}.",
+        (f"{len(integrity)} files; rows match manifest: {integrity.rows_match.all()}; "
+         f"hashes match: {integrity.hash_match.all()}."),
         "",
         "## Shot volume per season (bulk route)",
-        f"Expected range: regular season {cfg['data']['expected_fga']['regular_season']}, "
-        f"playoffs {cfg['data']['expected_fga']['playoffs']}.",
+        (f"Expected range: regular season {cfg['data']['expected_fga']['regular_season']}, "
+         f"playoffs {cfg['data']['expected_fga']['playoffs']}."),
         "",
         volumes.to_markdown(index=False),
         "",
         "## Cross-check: bulk dataset vs nba_api, 2024-25",
-        "Shots matched on game ID, game event ID and player ID; `diff_*` counts matched shots whose "
-        "value differs between routes.",
+        ("Shots matched on game ID, game event ID and player ID; `diff_*` counts matched shots "
+         "whose value differs between routes."),
         "",
         cross.set_index(["season", "season_type"]).T.to_markdown(),
         "",
         "## Reference tables",
-        f"- Player index: {players.PERSON_ID.nunique()} distinct players across "
-        f"{players.season.nunique()} season files (nba_api `PlayerIndex`).",
-        f"- All-Stars: {len(allstars)} player-season selections, "
-        f"{allstars.groupby('season').size().min()}-{allstars.groupby('season').size().max()} "
-        "per season (Wikipedia All-Star Game rosters, revision ids stored).",
+        (f"- Player index: {players.PERSON_ID.nunique()} distinct players across "
+         f"{players.season.nunique()} season files (nba_api `PlayerIndex`)."),
+        (f"- All-Stars: {len(allstars)} player-season selections, "
+         f"{allstars.groupby('season').size().min()}-{allstars.groupby('season').size().max()} "
+         "per season (Wikipedia All-Star Game rosters, revision ids stored)."),
         "",
     ]
     REPORT.write_text("\n".join(lines))
