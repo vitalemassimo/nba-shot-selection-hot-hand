@@ -311,3 +311,39 @@ three), three-point shooters (565; 46% above-the-break three). Zone shares are n
 **Decision (Massimo).** A player's playoff shots carry his regular-season cluster of the same season,
 matching the usage-tier rule (D-031).
 **Status.** Decided by Massimo, 2026-10-15.
+
+### D-036 · 2026-10-15 · Stage 5 outcomes are measured against the player's own baseline (Massimo)
+**Decision (Massimo).** In every model (0 to 3), the distance outcome is next-shot distance minus the
+player's leave-one-out baseline (D-027), and each zone outcome is the next-shot zone indicator minus
+the player's baseline share of that zone (three-pointers: corner plus above-the-break share).
+**Status.** Decided by Massimo, 2026-10-15, before any analysis-half estimate was computed.
+
+### D-037 · 2026-10-15 · Model 2 context controls (Massimo)
+**Decision (Massimo).** Score margin before the shot in 7 symmetric bins (<= -15, -14 to -6, -5 to -1,
+0, 1 to 5, 6 to 14, >= 15); period as a category with all overtimes pooled; clock remaining in the
+period, game-clock seconds since the previous shot, and the attempt number in the game (capped at
+15) as linear terms; home or away; season and season type (absorbed by the fixed effects in
+Model 3). Standard errors clustered by player in every model.
+**Status.** Decided by Massimo, 2026-10-15.
+
+### D-038 · 2026-10-15 · H0 pools the regular season and playoffs (Massimo)
+**Decision (Massimo).** The core test uses all analysis-half pairs, with season type as a control.
+H4 compares the two contexts separately.
+**Status.** Decided by Massimo, 2026-10-15.
+
+### D-039 · 2026-10-15 · Permutation test shuffles analysed shots only (Massimo)
+**Decision (Massimo).** Within each player-game (check: player-game-period), only analysis-population
+shots are shuffled between their time slots. Putbacks, tips, heaves and backcourt shots stay where
+they happened, so the same slots form pairs in every shuffle. Statistic: mean outcome of the next
+shot after a make minus after a miss; bias-corrected effect = observed minus the mean of 1,000
+shuffles (seed from config); two-sided p-value from the shuffled distribution.
+**Validation.** On synthetic independent shots the correction removes the pooled bias (corrected
+effect 0.002, p = 0.90); on synthetic streaky shots it detects the effect (tests/test_core.py).
+**Status.** Decided by Massimo, 2026-10-15.
+
+### D-040 · 2026-10-15 · Stage 5 run protocol (playbook 5.3, 5.5, 5.7)
+**Protocol.** Code was developed and debugged on the calibration half only; no estimate from it was
+shown to Massimo before D-036 to D-039 were decided. The final analysis runs once on the analysis
+half via `notebooks/04_core_test.ipynb`. The headline is Model 3's previous-shot-made coefficient
+on distance vs baseline; the second method is a mixed model with a random intercept per player and
+the Model 2 covariates. Any rerun of the final analysis gets a dated entry here with its reason.

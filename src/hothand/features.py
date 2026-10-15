@@ -24,6 +24,7 @@ from hothand.pairs import (
 )
 
 FEATURES = PROCESSED / "features.parquet"
+SHOTS = PROCESSED / "shots_features.parquet"  # shot-level table, used by the permutation test
 CLUSTERS = PROCESSED / "player_clusters.csv"
 
 
@@ -64,6 +65,10 @@ def build() -> pd.DataFrame:
 
     cl = fit_clusters(shots, cfg)
     cl.to_csv(CLUSTERS, index=False)
+
+    shots["distance_vs_baseline_ft"] = (shots[cfg["features"]["distance_column"]]
+                                        - shots.baseline_distance_ft)
+    shots.to_parquet(SHOTS, index=False)
 
     pairs = build_pairs(shots, cfg)
     dist = cfg["features"]["distance_column"]

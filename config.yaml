@@ -55,6 +55,11 @@ xfg:
   min_action_count: 500         # rarer action types pooled into "Other" (counted on calibration data)
   # Never include the previous shot's result as a feature.
 
+core:
+  # D-037 (Massimo): Model 2 context controls (playbook 4.7)
+  margin_bins: [-100, -15, -6, -1, 0, 5, 14, 100]   # shooter's score margin before the shot
+  shot_number_cap: 15           # attempt number in the game, capped (few players take more)
+
 inference:
   n_permutations: 1000
   alpha: 0.05
