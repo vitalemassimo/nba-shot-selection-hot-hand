@@ -380,3 +380,5 @@ labelled secondary analysis. Anything else is exploratory.
 **Status.** Decided by Massimo, 2026-10-15.
 **Run log (Stage 6).** Final analysis-half run: 2026-10-15, notebook committed unrun at a9c3abf. One run,
 no reruns.
+**Rerun 2026-10-15 (cosmetic).** Figure layout only (axis labels); `results_segments.csv` verified
+byte-identical before and after.
