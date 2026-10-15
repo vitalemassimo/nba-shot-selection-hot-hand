@@ -248,3 +248,14 @@ putbacks, tips or backcourt shots. A player with one shot in a group has no base
 0.1 ft (`coord_distance_ft`), not the published distance, which is rounded down to whole feet.
 The two agree within 1 ft on every shot (Stage 3 audit).
 **Status.** Decided by Massimo, 2026-10-15.
+
+### D-029 · 2026-10-15 · Putbacks and tips count in the streak state (Massimo)
+**Decision (Massimo's wording).** I would count a putback in the streak because it brings energy and
+confidence to the player, especially when it is not on your own miss: the player worked hard for
+that rebound and got rewarded.
+**Details (Massimo, 2026-10-15).** Tips count too. A missed putback or tip counts as a miss (it ends a
+run of makes); a made one extends it.
+**Operationalised as.** Putbacks and tips stay out of analysed pairs (D-024) but are links in the
+streak chain, so they enter "last two shots" and "3+ makes in a row". Heaves, backcourt shots, the
+gap rule and a new game still break the chain.
+**Status.** Decided by Massimo, 2026-10-15.

@@ -86,7 +86,17 @@ def test_putback_left_out_as_next_and_as_previous(cfg):
     p = pairs_of([shot("G1", 1, 10, 0), shot("G1", 1, 12, 1, "Putback Layup Shot", dist=1),
                   shot("G1", 1, 60, 1), shot("G1", 1, 90, 0)], cfg)
     assert p.game_elapsed_s.tolist() == [90]
-    assert p.prev_make_run.tolist() == [1]  # the streak chain restarted after the putback
+    # D-029: the made putback counts in the streak: putback (make), jump (make) -> run of 2
+    assert p.prev_make_run.tolist() == [2]
+    assert p.last_two.tolist() == ["made-made"]
+
+
+def test_missed_putback_counts_as_a_miss_in_the_streak(cfg):
+    p = pairs_of([shot("G1", 1, 10, 1), shot("G1", 1, 40, 0, "Tip Layup Shot", dist=1),
+                  shot("G1", 1, 70, 1), shot("G1", 1, 100, 0)], cfg)
+    assert p.game_elapsed_s.tolist() == [100]
+    assert p.prev_make_run.tolist() == [1]  # the missed tip ended the run of makes
+    assert p.last_two.tolist() == ["miss-made"]
 
 
 def test_heave_breaks_pair_when_configured(cfg):

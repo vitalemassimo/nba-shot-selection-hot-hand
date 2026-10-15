@@ -6,6 +6,7 @@ Definitions are Massimo's (docs/decisions.md); every threshold comes from config
   D-017  shot order = play-by-play file order (`pbp_row`)
   D-018  heaves (36+ ft, last 3 s of Q1-Q3) are never analysed
   D-024  a pair is left out when either shot is a putback or tip
+  D-029  putbacks and tips still count in the streak state, made or missed
   D-010  games are randomly split into calibration and analysis halves
 """
 
@@ -67,17 +68,20 @@ def build_pairs(shots: pd.DataFrame, cfg: dict) -> pd.DataFrame:
     s["gap_s"] = s.game_elapsed_s - prev.game_elapsed_s
     s["same_period"] = s.period == prev.period
 
-    valid = prev.pbp_row.notna() & (s.gap_s <= p["max_gap_game_seconds"])
+    # A link joins two consecutive shots for the streak state. Putbacks and tips count in the
+    # streak, made or missed (D-029), so they do not break a link; heaves, backcourt shots and
+    # the gap rule do.
+    link = prev.pbp_row.notna() & (s.gap_s <= p["max_gap_game_seconds"])
     if p["same_period_only"]:
-        valid &= s.same_period
-    valid &= ~s.is_putback_tip & ~prev.is_putback_tip.astype(bool)
-    valid &= ~s.is_heave & ~prev.is_heave.astype(bool)
-    valid &= ~s.is_backcourt & ~prev.is_backcourt.astype(bool)
-    s["valid_pair"] = valid
+        link &= s.same_period
+    link &= ~s.is_heave & ~prev.is_heave.astype(bool)
+    link &= ~s.is_backcourt & ~prev.is_backcourt.astype(bool)
+    # An analysed pair is a link where neither shot is a putback or tip (D-024).
+    s["valid_pair"] = link & ~s.is_putback_tip & ~prev.is_putback_tip.astype(bool)
 
     # Streak state: consecutive makes ending at the previous shot, counted along an unbroken
-    # chain of valid pairs (a broken link starts a new chain).
-    chain = (~s.valid_pair).cumsum()  # also starts a new chain at each new player-game
+    # chain of links (a broken link starts a new chain).
+    chain = (~link).cumsum()  # also starts a new chain at each new player-game
     s["make_run_through_this"] = _run_length(s.shot_made, chain)
     s["prev_make_run"] = s.groupby(chain).make_run_through_this.shift(1)
     s["prev2_made"] = s.groupby(chain).shot_made.shift(2)
