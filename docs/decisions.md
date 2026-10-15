@@ -411,3 +411,6 @@ and no opponent field-goal attempt, defensive rebound or turnover happens before
 replaces "previous shot made" with "the shot after the next one was made" and controls for that
 later shot's distance, zone and xFG, mirroring how Model 3 controls for the previous shot.
 **Status.** Decided by Massimo, 2026-10-15.
+**Run log (Stage 7).** First analysis-half run, 2026-10-15, crashed while drawing the specification
+curve (a matplotlib colour argument); nbconvert does not save a failed notebook, so no Stage 7 result
+was seen. Plot code fixed (no analysis change) and the notebook run again.
