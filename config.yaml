@@ -22,6 +22,13 @@ data:
 pairs:
   max_gap_game_seconds: 240     # max game-clock seconds between two shots to count as a pair (D-006)
   same_period_only: false       # primary spec allows pairs across a period break; tested in Stage 7
+  # D-024: a pair is left out when either shot is one of these (putbacks and tips)
+  excluded_action_types: ["Tip Layup Shot", "Putback Layup Shot", "Tip Dunk Shot", "Putback Dunk Shot"]
+  # D-018: heaves = shots from this distance or more, in the last N seconds of periods 1-3
+  heave_min_distance_ft: 36
+  heave_seconds_remaining: 3
+  heave_max_period: 3
+  heave_breaks_pair: true       # D-018 as confirmed; see the open question raised in Stage 4
 
 segments:
   veteran_min_season_number: 10 # veteran = 10th NBA season or later (D-008, Massimo)
@@ -31,6 +38,13 @@ segments:
   cluster_k_candidates: [3, 4, 5, 6, 7]
   cluster_stability_seeds: 20
   cluster_bootstrap_resamples: 100
+
+features:
+  # PROPOSED by Claude, awaiting Massimo: zone for non-heave backcourt shots (they are 3PT attempts)
+  backcourt_zone: "above_break_three"
+  # PROPOSED by Claude, awaiting Massimo: leave-one-out baseline group (player, season, season type,
+  # half); baseline shots = shots that can be a next shot (no heaves, no putbacks or tips)
+  baseline_group: ["player_id", "season", "season_type", "half"]
 
 split:
   calibration_fraction: 0.5     # games (not shots) assigned at random to calibration vs analysis
