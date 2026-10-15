@@ -73,5 +73,5 @@ robustness:
   heave_seconds_remaining: 3    # shots in the last N seconds of a period are "heaves"
   garbage_time_margin: 20       # 4th quarter, |score margin| >= this ... (D-022)
   garbage_time_minutes_left: 5  # ... and this many minutes or fewer left
-  # Survival rule (D-012): sign unchanged AND CI overlaps baseline estimate in >= 80% of variations
+  # Survival rule (D-045): sign positive in every counted variation AND 95% CI contains the baseline in >= 80%
   survival_share: 0.8

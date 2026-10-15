@@ -382,3 +382,32 @@ labelled secondary analysis. Anything else is exploratory.
 no reruns.
 **Rerun 2026-10-15 (cosmetic).** Figure layout only (axis labels); `results_segments.csv` verified
 byte-identical before and after.
+
+### D-045 · 2026-10-15 · Survival rule (Massimo; replaces D-012)
+**Decision (Massimo).** The headline (H0 distance shift, Model 3, analysis half: 1.50 ft) survives if
+(a) its sign stays positive in every counted variation, and (b) each variation's 95% interval
+contains the baseline estimate in at least 80% of the counted variations. A single sign flip makes
+it fragile. Written before any Stage 7 variation was run.
+**Status.** Decided by Massimo, 2026-10-15.
+
+### D-046 · 2026-10-15 · What the survival rule judges and how variations are counted (Massimo)
+**Decision (Massimo).** The rule judges the headline only. H2 (low minus high usage) and the H3
+rim-bigs gap get the same variations in the sensitivity table, reported plainly without a verdict.
+Every estimate counts once (each season, each gap value, ...), except "drop each of the 10 most
+influential players", which counts as one variation judged on its worst case. The longer-streak
+variations (last two shots, 3+ makes) and the cluster-count variations estimate a different quantity,
+so they are reported in their own section and do not count.
+**Status.** Decided by Massimo, 2026-10-15.
+
+### D-047 · 2026-10-15 · Second-chance variation (Massimo)
+**Decision (Massimo).** Add a variation that leaves out pairs where the next shot comes in the same
+possession after the previous miss: after the miss, the shooter's team gets the offensive rebound,
+and no opponent field-goal attempt, defensive rebound or turnover happens before the next shot
+(built from the play-by-play). Tests the possession-mechanics explanation in the H0 result.
+**Status.** Decided by Massimo, 2026-10-15.
+
+### D-048 · 2026-10-15 · Stage 7 estimator and placebo (Massimo)
+**Decision (Massimo).** Each variation re-runs Model 3 (D-036, D-037). The future-result placebo
+replaces "previous shot made" with "the shot after the next one was made" and controls for that
+later shot's distance, zone and xFG, mirroring how Model 3 controls for the previous shot.
+**Status.** Decided by Massimo, 2026-10-15.
