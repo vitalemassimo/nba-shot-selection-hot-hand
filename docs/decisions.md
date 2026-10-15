@@ -212,7 +212,12 @@ resetting the offense.
 Shot (38,559 shots), Putback Layup Shot (28,012), Tip Dunk Shot (6,489), Putback Dunk Shot (4,233).
 Together 77,293 of 1,804,926 cleaned shots (4.3%), 8,261-10,553 per regular season. Counted before
 any pair or outcome was computed.
-**Open detail for Stage 4 (Massimo to decide).** Whether a left-out putback still counts as the
-previous shot for the pair that follows it (e.g. miss, putback, jump shot: is (putback, jump shot)
-a pair?).
+**Putback as the previous shot (Massimo's wording, 2026-10-15).** The pair putback-jump shot
+should not count because a putback is basically something that you have to take. You got the ball
+under the basket, so as a basketball player, that is one of the easiest shots that you have,
+without accounting for the defender in this statement, while a jump shot comes from a more
+reasoned-out reading of the defence and what you, as a player, can do.
+**Operationalised as.** A pair is left out when either shot is a putback or tip. The putback still
+sits between the shots around it, so under D-006 (no other attempt in between) a miss, putback,
+jump shot sequence produces no pair at all.
 **Status.** Decided by Massimo, 2026-10-15.
