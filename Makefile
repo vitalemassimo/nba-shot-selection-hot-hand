@@ -1,6 +1,6 @@
 PY := PYTHONPATH=src .venv/bin/python
 
-.PHONY: setup test lint all data verify-data allstars audit features core
+.PHONY: setup test lint all data verify-data allstars audit features core segments
 setup:  ## create the environment from the lock file
 	python3 -m venv .venv
 	$(PY) -m pip install -r requirements-lock.txt
@@ -23,3 +23,5 @@ features:  ## Stage 4: build the feature table and its report notebook
 	$(PY) run_all.py --stage 4
 core:  ## Stage 5: core test on the analysis half
 	$(PY) run_all.py --stage 5
+segments:  ## Stage 6: H1-H4 on the analysis half
+	$(PY) run_all.py --stage 6

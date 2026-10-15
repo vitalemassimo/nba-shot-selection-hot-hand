@@ -349,3 +349,32 @@ on distance vs baseline; the second method is a mixed model with a random interc
 the Model 2 covariates. Any rerun of the final analysis gets a dated entry here with its reason.
 **Run log.** Final analysis-half run: 2026-10-15, notebook committed unrun at e89be31, specifications at
 abc1c9c. One run, no reruns.
+
+### D-041 · 2026-10-15 · H1-H4 test the size of the H0 shift (Massimo)
+**Decision (Massimo).** Each segment hypothesis compares the H0 shift (Model 3's after-make minus
+after-miss gap in distance vs baseline) between groups, through an interaction of "previous shot
+made" with the group in Model 3 (playbook 6.1). Each group's own Model 3 estimate is shown for display,
+and the after-miss and after-make moves vs each player's baseline are shown as a description.
+**Status.** Decided by Massimo, 2026-10-15.
+
+### D-042 · 2026-10-15 · H1-H3 pool the regular season and playoffs (Massimo)
+**Decision (Massimo).** As in H0 (D-038): all analysis-half pairs, season type absorbed by the
+player-season fixed effects.
+**Status.** Decided by Massimo, 2026-10-15.
+
+### D-043 · 2026-10-15 · H2 test = high vs low usage tier (Massimo)
+**Decision (Massimo).** The pre-registered H2 test is the difference in the H0 shift between the high
+and low usage tiers. The mid tier and the All-Star subset are shown as labelled estimates.
+**Status.** Decided by Massimo, 2026-10-15.
+
+### D-044 · 2026-10-15 · H4 test = players in both contexts (Massimo)
+**Decision (Massimo).** The pre-registered H4 test uses only player-seasons with analysis-half pairs in
+both the regular season and the playoffs, so the same players are compared in two contexts. The
+all-players version is reported next to it (playbook 6.2).
+**Also fixed by the playbook (6.2-6.5).** H3: one joint test that the shift is equal across the four
+clusters; pairwise differences only if it rejects. Holm correction across the four pre-registered
+p-values (H1 interaction, H2 high-vs-low interaction, H3 joint test, H4 both-contexts interaction);
+adjusted and unadjusted p-values side by side. Cells below 30 players or 2,000 pairs are "too few
+shots to estimate". A joint model with the rookie, usage and cluster interactions together is a
+labelled secondary analysis. Anything else is exploratory.
+**Status.** Decided by Massimo, 2026-10-15.
