@@ -347,3 +347,5 @@ shown to Massimo before D-036 to D-039 were decided. The final analysis runs onc
 half via `notebooks/04_core_test.ipynb`. The headline is Model 3's previous-shot-made coefficient
 on distance vs baseline; the second method is a mixed model with a random intercept per player and
 the Model 2 covariates. Any rerun of the final analysis gets a dated entry here with its reason.
+**Run log.** Final analysis-half run: 2026-10-15, notebook committed unrun at e89be31, specifications at
+abc1c9c. One run, no reruns.
