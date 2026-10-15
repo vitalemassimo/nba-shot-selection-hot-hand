@@ -378,3 +378,5 @@ adjusted and unadjusted p-values side by side. Cells below 30 players or 2,000 p
 shots to estimate". A joint model with the rookie, usage and cluster interactions together is a
 labelled secondary analysis. Anything else is exploratory.
 **Status.** Decided by Massimo, 2026-10-15.
+**Run log (Stage 6).** Final analysis-half run: 2026-10-15, notebook committed unrun at a9c3abf. One run,
+no reruns.
