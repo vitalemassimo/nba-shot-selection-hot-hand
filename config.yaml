@@ -50,6 +50,7 @@ robustness:
   pair_gap_variants_seconds: [60, 120, 240, 480, null]   # null = no limit
   min_fga_variants: [50, 100, 200]
   heave_seconds_remaining: 3    # shots in the last N seconds of a period are "heaves"
-  garbage_time_margin: 20       # 4th quarter and |score margin| >= this = garbage time (D-022)
+  garbage_time_margin: 20       # 4th quarter, |score margin| >= this ... (D-022)
+  garbage_time_minutes_left: 5  # ... and this many minutes or fewer left
   # Survival rule (D-012): sign unchanged AND CI overlaps baseline estimate in >= 80% of variations
   survival_share: 0.8

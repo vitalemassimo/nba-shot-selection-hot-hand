@@ -61,15 +61,14 @@ to the sequence (a shooting foul followed by free throws looks like nothing happ
 
 ### D-008 · 2026-10-14 · Rookie and veteran (revised by Massimo 2026-10-15)
 **Decision (Massimo's wording).** Rookie = first NBA season, taken from the player table. Veteran =
-10th season or later; seasons 2–4 are left out of H1.
+10th season or later; seasons 2–9 are left out of H1.
 **Replaces.** Claude's draft of 2026-10-14 (veteran = 5th season or later).
 **Reason.** Using the window's first season would label veterans as rookies in 2018-19.
 **Group sizes (regular season, 2018-19 to 2025-26, first season from the player table):**
 rookies 816 player-seasons / 145,669 shots; seasons 2-4: 1,599 / 534,508; seasons 5-9: 1,331 /
 663,271; season 10+: 720 player-seasons, 234 players / 346,438 shots.
-**Open question for Massimo.** With veteran = 10+, seasons 5-9 are in neither group. Should H1
-leave out seasons 2-9 (not 2-4)?
-**Status.** Revised by Massimo, 2026-10-15; open question pending.
+**Status.** Revised and confirmed by Massimo, 2026-10-15 (seasons 2-9 stay in the full
+sample but are left out of the H1 comparison).
 
 ### D-009 · 2026-10-14 · Usage tier
 **Decision.** Tertiles of field-goal attempts per game within each season, among player-seasons with at
@@ -183,11 +182,11 @@ out of scope for H4 anyway.
 ### D-022 · 2026-10-15 · Garbage time (Massimo)
 **Decision (Massimo's wording).** Garbage time in the 4th quarter is just to be considered if the
 score is not close, like if a team is losing by 20+ points.
-**Operationalised as (to confirm).** A shot is in garbage time if it is in the 4th quarter and the
-absolute score margin before the shot is 20 or more, at any time remaining in the quarter. Overtime
-is never garbage time. Replaces Claude's draft, which also required 5 minutes or less to be left.
+**Operationalised as.** A shot is in garbage time if it is in the 4th quarter, with 5 minutes or
+less left, and the absolute score margin before the shot is 20 or more. Overtime is never garbage
+time. Massimo kept the 5-minute condition: joining the two makes more sense.
 Used only in the Stage 7 robustness variation "exclude heaves and garbage time".
-**Status.** Decided by Massimo, 2026-10-15; operational wording pending his confirmation.
+**Status.** Confirmed by Massimo, 2026-10-15.
 
 ### D-023 · 2026-10-15 · Thresholds that were in config.yaml without an entry
 **Decision.** Clustering: player-seasons need at least 200 field-goal attempts; k tested from 3 to
