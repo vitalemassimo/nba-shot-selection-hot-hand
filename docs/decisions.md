@@ -259,3 +259,21 @@ run of makes); a made one extends it.
 streak chain, so they enter "last two shots" and "3+ makes in a row". Heaves, backcourt shots, the
 gap rule and a new game still break the chain.
 **Status.** Decided by Massimo, 2026-10-15.
+
+### D-030 · 2026-10-15 · Rookie = first season actually played (Massimo)
+**Finding.** The player table's `FROM_YEAR` is the first season on a roster, not the first season
+played: 23 players who debuted in the window are listed a year early (e.g. Kendrick Nunn and Michael
+Porter Jr., whose rookie seasons were 2019-20). Also, the `PlayerIndex` "season" files are not
+season rosters (each lists roughly the players whose last season it was); together they cover every
+player once, so they are used as one player table, never per season.
+**Decision (Massimo).** First NBA season = the player table's first season, moved to the first season
+with a shot when the listed season is inside the window and the player took no shot in it. Before
+2018-19 the shot data cannot correct it, so the listed season is kept (a known limitation for
+veterans' season counts).
+**Status.** Decided by Massimo, 2026-10-15.
+
+### D-031 · 2026-10-15 · Playoff usage tier = regular-season tier (Massimo)
+**Decision (Massimo).** A player's usage tier is computed from his regular season (official totals,
+FGA per game, thirds among players with 100+ FGA) and carries into that season's playoffs.
+**Reason.** Playoff samples are short and many players would fall below the 100-FGA minimum.
+**Status.** Decided by Massimo, 2026-10-15.
