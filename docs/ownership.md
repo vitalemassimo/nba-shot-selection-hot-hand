@@ -41,6 +41,9 @@ Read this file at the start of every session, together with `docs/decisions.md`,
   decision before the final run and every result to Massimo, who writes the interpretation in
   plain units, reproduces one number himself and declares the gate.
 - 2026-10-15, Massimo: the H0 interpretation in `docs/hypotheses.md` was written by Massimo.
+- 2026-10-15, Massimo: Stage 6 code is delegated to Claude Code (interaction models, Holm correction,
+  forest plot, cluster heat map). Massimo decides every comparison rule before the run, compares the
+  results with his predictions, fills the Result column and declares the gate.
 
 ## Always Massimo's (never delegated)
 
