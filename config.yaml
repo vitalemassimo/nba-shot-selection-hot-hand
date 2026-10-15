@@ -40,14 +40,13 @@ segments:
   cluster_bootstrap_resamples: 100
 
 features:
-  # PROPOSED by Claude, awaiting Massimo: zone for non-heave backcourt shots (they are 3PT attempts)
-  backcourt_zone: "above_break_three"
-  # PROPOSED by Claude, awaiting Massimo: leave-one-out baseline group (player, season, season type,
-  # half); baseline shots = shots that can be a next shot (no heaves, no putbacks or tips)
+  # D-027 (Massimo): leave-one-out baseline group; baseline shots = the analysis population
+  # (no heaves, putbacks, tips or backcourt shots)
   baseline_group: ["player_id", "season", "season_type", "half"]
+  distance_column: "coord_distance_ft"   # D-028 (Massimo): distance from x/y coordinates
 
 split:
-  calibration_fraction: 0.5     # games (not shots) assigned at random to calibration vs analysis
+  calibration_fraction: 0.5     # games (not shots), drawn within each season x season type (D-025)
 
 xfg:
   features: ["shot_distance", "shot_zone_basic", "shot_type", "action_type", "shot_angle"]

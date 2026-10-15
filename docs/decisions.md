@@ -221,3 +221,30 @@ reasoned-out reading of the defence and what you, as a player, can do.
 sits between the shots around it, so under D-006 (no other attempt in between) a miss, putback,
 jump shot sequence produces no pair at all.
 **Status.** Decided by Massimo, 2026-10-15.
+
+### D-025 · 2026-10-15 · Game split drawn within each season and season type (Massimo)
+**Finding.** One 50/50 draw over all 10,191 games gave individual playoff seasons 44-59% calibration
+games (only 35 analysis games in the 2020-21 playoffs).
+**Decision (Massimo).** Draw the seeded 50/50 split separately inside each season x season type.
+Refines D-010; games, not shots, are still the unit. Saved to `data/processed/game_split.csv`.
+**Status.** Decided by Massimo, 2026-10-15.
+
+### D-026 · 2026-10-15 · Backcourt shots are left out (Massimo)
+**Finding.** 274 backcourt shots are not heaves under D-018 (mostly 4th-quarter or mid-period
+desperation shots); they have no zone in the five-zone scheme.
+**Decision (Massimo).** Leave them out, like heaves: a backcourt shot is never analysed, and any pair
+touching one is left out (it stays in the sequence, so it also breaks the pair around it).
+**Status.** Decided by Massimo, 2026-10-15.
+
+### D-027 · 2026-10-15 · Leave-one-out baseline (Massimo)
+**Decision (Massimo).** A shot's baseline is the mean distance and zone mix of the same player's
+other shots in the same season, the same season type (regular season and playoffs separate) and
+the same calibration/analysis half. Baseline shots are the analysis population: no heaves,
+putbacks, tips or backcourt shots. A player with one shot in a group has no baseline.
+**Status.** Decided by Massimo, 2026-10-15.
+
+### D-028 · 2026-10-15 · Distance measure (Massimo)
+**Decision (Massimo).** Distance is computed from the court coordinates, sqrt(x² + y²) / 10, to
+0.1 ft (`coord_distance_ft`), not the published distance, which is rounded down to whole feet.
+The two agree within 1 ft on every shot (Stage 3 audit).
+**Status.** Decided by Massimo, 2026-10-15.

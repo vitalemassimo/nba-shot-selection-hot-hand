@@ -41,9 +41,9 @@ def flag_shots(shots: pd.DataFrame, cfg: dict) -> pd.DataFrame:
     out["is_heave"] = ((out.coord_distance_ft >= p["heave_min_distance_ft"])
                        & (out.clock_remaining_s <= p["heave_seconds_remaining"])
                        & (out.period <= p["heave_max_period"]))
-    out["zone"] = out.shot_zone_basic.map(ZONES)  # Backcourt -> NaN, see backcourt_zone in config
-    if cfg["features"]["backcourt_zone"]:
-        out["zone"] = out.zone.fillna(cfg["features"]["backcourt_zone"])
+    out["is_backcourt"] = out.shot_zone_basic.eq("Backcourt")  # left out of the analysis (D-026)
+    out["zone"] = out.shot_zone_basic.map(ZONES)  # Backcourt has no analysis zone
+    out["in_analysis_population"] = ~(out.is_putback_tip | out.is_heave | out.is_backcourt)
     return out
 
 
@@ -52,8 +52,8 @@ def build_pairs(shots: pd.DataFrame, cfg: dict) -> pd.DataFrame:
 
     Sequences are per player per game, in play-by-play order. If heaves do not break pairs, they
     are removed before sequencing; otherwise they stay in the sequence and any pair touching one
-    is left out. Putbacks and tips always stay in the sequence (D-006: they sit between the shots
-    around them) and any pair touching one is left out (D-024).
+    is left out. Putbacks, tips (D-024) and backcourt shots (D-026) always stay in the sequence
+    (D-006: they sit between the shots around them) and any pair touching one is left out.
     """
     p = cfg["pairs"]
     s = shots if p["heave_breaks_pair"] else shots[~shots.is_heave]
@@ -62,7 +62,7 @@ def build_pairs(shots: pd.DataFrame, cfg: dict) -> pd.DataFrame:
 
     prev = g[["pbp_row", "game_elapsed_s", "period", "shot_made", "coord_distance_ft",
               "shot_distance_ft", "zone", "shot_value", "is_putback_tip", "is_heave",
-              "action_type"]].shift(1)
+              "is_backcourt", "action_type"]].shift(1)
     s["shot_number"] = g.cumcount() + 1  # this player's attempt number in the game
     s["gap_s"] = s.game_elapsed_s - prev.game_elapsed_s
     s["same_period"] = s.period == prev.period
@@ -72,6 +72,7 @@ def build_pairs(shots: pd.DataFrame, cfg: dict) -> pd.DataFrame:
         valid &= s.same_period
     valid &= ~s.is_putback_tip & ~prev.is_putback_tip.astype(bool)
     valid &= ~s.is_heave & ~prev.is_heave.astype(bool)
+    valid &= ~s.is_backcourt & ~prev.is_backcourt.astype(bool)
     s["valid_pair"] = valid
 
     # Streak state: consecutive makes ending at the previous shot, counted along an unbroken
@@ -100,15 +101,30 @@ def _run_length(made: pd.Series, chain: pd.Series) -> pd.Series:
     return made.groupby([chain, block]).cumsum()
 
 
-def assign_game_split(game_ids: pd.Series, cfg: dict) -> pd.DataFrame:
-    """Seeded random split of games (not shots) into calibration and analysis halves (D-010)."""
-    games = np.sort(game_ids.unique())
+def assign_game_split(games: pd.DataFrame, cfg: dict) -> pd.DataFrame:
+    """Seeded random split of games (not shots) into calibration and analysis halves (D-010),
+    drawn separately within each season and season type (D-025).
+
+    `games` needs game_id, season and season_type; duplicates are ignored.
+    """
+    games = games[["game_id", "season", "season_type"]].drop_duplicates()
     rng = np.random.default_rng(cfg["random_seed"])
-    shuffled = rng.permutation(games)
-    n_cal = round(len(games) * cfg["split"]["calibration_fraction"])
-    half = pd.Series("analysis", index=shuffled)
-    half.iloc[:n_cal] = "calibration"
-    return half.sort_index().rename_axis("game_id").rename("half").reset_index()
+    parts = []
+    for _, cell in games.sort_values(["season", "season_type", "game_id"]).groupby(
+            ["season", "season_type"], sort=True):
+        shuffled = rng.permutation(cell.game_id.to_numpy())
+        n_cal = round(len(shuffled) * cfg["split"]["calibration_fraction"])
+        parts.append(pd.DataFrame({"game_id": shuffled,
+                                   "half": ["calibration"] * n_cal
+                                   + ["analysis"] * (len(shuffled) - n_cal)}))
+    return pd.concat(parts).sort_values("game_id").reset_index(drop=True)
+
+
+def player_baselines(shots: pd.DataFrame, cfg: dict) -> pd.DataFrame:
+    """Leave-one-out baseline for every analysis-population shot, within the D-027 group
+    (player, season, season type, half). Needs `half` and the flags from flag_shots."""
+    pop = shots[shots.in_analysis_population]
+    return loo_baseline(pop, cfg["features"]["baseline_group"])
 
 
 def loo_baseline(shots: pd.DataFrame, group: list[str]) -> pd.DataFrame:

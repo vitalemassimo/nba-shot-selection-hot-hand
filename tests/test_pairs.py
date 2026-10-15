@@ -111,10 +111,24 @@ def test_same_period_only(cfg):
     assert len(pairs_of(rows, cfg)) == 0
 
 
-def test_game_split_is_by_game_seeded_and_balanced(cfg):
-    games = pd.Series([f"G{i}" for i in range(100)] * 3)
+def test_game_split_is_by_game_seeded_and_balanced_per_season(cfg):
+    games = pd.DataFrame({"game_id": [f"G{i}" for i in range(100)],
+                          "season": ["2018-19"] * 60 + ["2019-20"] * 40,
+                          "season_type": (["Regular Season"] * 50 + ["Playoffs"] * 10) * 1
+                          + ["Regular Season"] * 40})
+    games = pd.concat([games] * 3)  # one row per shot in real data; duplicates must not matter
     a, b = assign_game_split(games, cfg), assign_game_split(games, cfg)
-    assert a.equals(b) and len(a) == 100 and (a.half == "calibration").sum() == 50
+    assert a.equals(b) and len(a) == 100
+    m = a.merge(games.drop_duplicates(), on="game_id")
+    cal = m[m.half == "calibration"].groupby(["season", "season_type"]).size().to_dict()
+    assert cal == {("2018-19", "Playoffs"): 5, ("2018-19", "Regular Season"): 25,
+                   ("2019-20", "Regular Season"): 20}
+
+
+def test_backcourt_shot_breaks_pairs(cfg):
+    df = seq([shot("G1", 1, 10, 0), shot("G1", 1, 30, 0, dist=40.0), shot("G1", 1, 60, 1)])
+    df.loc[1, "shot_zone_basic"] = "Backcourt"
+    assert len(build_pairs(flag_shots(df, cfg), cfg)) == 0
 
 
 def test_loo_baseline_excludes_the_shot_itself():
