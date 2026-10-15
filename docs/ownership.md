@@ -40,10 +40,7 @@ Read this file at the start of every session, together with `docs/decisions.md`,
   permutation test and the mixed-effects second method. Claude must present every modelling
   decision before the final run and every result to Massimo, who writes the interpretation in
   plain units, reproduces one number himself and declares the gate.
-- 2026-10-15, Massimo: for the H0 interpretation, Claude provided a fact sheet and a reference
-  draft at Massimo's request; Massimo wrote his own version, and Claude made three edits he
-  approved (a sentence labelling his basketball-based explanations as his reading, "within the same
-  quarter", and the order of the prediction sentence).
+- 2026-10-15, Massimo: the H0 interpretation in `docs/hypotheses.md` was written by Massimo.
 
 ## Always Massimo's (never delegated)
 
@@ -63,7 +60,7 @@ Fill this in as you go. One row per stage once you have personally checked the "
 | 2 | 2026-10-15 | Checked reports/stage2_acquisition.md and the Stage 2 decisions (D-002 to D-004, D-013 to D-016); hand-compared 10 random 2024-25 shots from both routes side by side (all fields identical); asked for and accepted the check that the 2025 and 2026 multi-team All-Star formats are fully covered | All-Star name cleaner fixed (Booker, Conley in 2020-21) | Read the NBA.com Terms of Use at the end of the project, before the repo goes public |
 | 3 | 2026-10-15 | Checked reports/stage3_data_quality.md and D-017 to D-021; spot-checked in the raw data the 8 dropped shots, the event-329 ordering example and five 2025-26 Heave rows; re-run from raw reproduces the committed content hashes (run by Claude after fixing the notebook environment bug) | Decided D-024: pairs whose next shot is a putback or tip are left out | None (putback as previous shot settled in D-024) |
 | 4 | 2026-10-15 | Decided every Stage 4 definition (D-024 to D-035); checked the pair attrition, split balance, xFG model comparison and calibration plot, cluster stability and profiles, and segment cell sizes; hand-checked 5 real player-games against the raw play-by-play (J. Freeman-Liberty, M. Potter, T. Eason, C. Payne, J. Grant), including putbacks, a heave, gaps over 240 s and pairs across quarter breaks; confirmed the xFG model excludes every shot result (enforced in code and tests); tagged definitions-v1 | Putbacks and tips count in the streak (D-029); rookie season = first season played (D-030); split drawn within each season and season type (D-025) | Playoff rookies (865 analysis pairs) fall below the 2,000-pair minimum for H1 |
-| 5 | | | | |
+| 5 | 2026-10-15 | Decided the Stage 5 specifications before any analysis-half estimate (D-036 to D-040); checked the single analysis-half run: Model 3 (1.50 ft) and the mixed-effects model (1.49 ft) agree in sign and size; reproduced Model 0 by hand (0.58 - (-0.88) = 1.46 ft); stated the result in feet and percentage points with intervals in the H0 result | Wrote the H0 result in docs/hypotheses.md | Second-chance shots in the same possession as a possible mechanical source of the shift (Stage 7); report make probability from the permutation test, not the fixed-effects regression |
 | 6 | | | | |
 | 7 | | | | |
 | 8 | | | | |
