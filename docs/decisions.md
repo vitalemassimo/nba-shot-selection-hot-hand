@@ -196,3 +196,23 @@ the last 3 s of a period. Data sanity ranges: 150,000-240,000 attempts per regul
 8,000-25,000 per playoffs. Proposed by Claude, reviewed by Massimo.
 **Status.** Confirmed by Massimo, 2026-10-15.
 
+
+### D-024 · 2026-10-15 · Leave out pairs where the next shot is a putback or tip (Massimo)
+**Finding (flagged by Claude in the Stage 3 spot-check).** In 2024-25 game 0022400002, Stewart misses
+a tip at 1:40 of Q2, rebounds, misses another tip at 1:39 and scores a putback at 1:36. With the D-006
+pair definition each of these is "after a miss, the next shot is at the rim", which is the H0
+prediction produced by rebounding mechanics rather than by a shot-selection decision.
+**Decision (Massimo's wording).** Leave out pairs where the next shot is a putback or tip.
+**Alternatives considered.** A minimum time between the two shots; requiring the next shot to come
+from a new possession.
+**Reason (Massimo).** Finding the right time between the two shots with good reasoning is basically
+impossible; requiring a new possession takes away the importance of offensive rebounding and then
+resetting the offense.
+**Operationalised as.** A pair is left out when the next shot's `action_type` is one of: Tip Layup
+Shot (38,559 shots), Putback Layup Shot (28,012), Tip Dunk Shot (6,489), Putback Dunk Shot (4,233).
+Together 77,293 of 1,804,926 cleaned shots (4.3%), 8,261-10,553 per regular season. Counted before
+any pair or outcome was computed.
+**Open detail for Stage 4 (Massimo to decide).** Whether a left-out putback still counts as the
+previous shot for the pair that follows it (e.g. miss, putback, jump shot: is (putback, jump shot)
+a pair?).
+**Status.** Decided by Massimo, 2026-10-15.

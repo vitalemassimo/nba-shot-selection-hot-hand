@@ -42,11 +42,13 @@ Read this file at the start of every session, together with `docs/decisions.md`,
 
 Fill this in as you go. One row per stage once you have personally checked the "Massimo verifies" items.
 
+Rows 1-3 were written by Claude at Massimo's request on 2026-10-15, after Massimo declared the Stage 1-3 gates passed in chat.
+
 | Stage | Date verified | What I checked | What I changed or fixed | Open questions |
 |---|---|---|---|---|
-| 1 | | | | |
-| 2 | | | | |
-| 3 | | | | |
+| 1 | 2026-10-15 | Reviewed config.yaml values and the Stage 1 decisions (D-005 to D-012, D-023) in chat; confirmed that the predictions commit (0e843c9, 23:51) precedes the first download (about 23:54). The fresh-clone install was run by Claude on 2026-10-14 (setup, 3 tests and the empty pipeline passed), not by Massimo | D-008 veteran threshold changed to 10th season; seasons 2-9 left out of H1. D-022 garbage time redefined (4th quarter, 20+ margin, 5 minutes or less) | None |
+| 2 | 2026-10-15 | Reviewed the Stage 2 decisions (D-002 to D-004, D-013 to D-016) in chat; reviewed a printout of 10 random 2024-25 shots from both routes side by side (all fields identical); asked for and accepted the check that the 2025 and 2026 multi-team All-Star formats are fully covered | All-Star name cleaner fixed (Booker, Conley in 2020-21) | Reading the NBA.com Terms of Use is not recorded as done |
+| 3 | 2026-10-15 | Reviewed D-017 to D-021 in chat; reviewed printouts from the raw data of the 8 dropped shots, the event-329 ordering example and five 2025-26 Heave rows; re-run from raw reproduces the committed content hashes (run by Claude after fixing the notebook environment bug) | Decided D-024: pairs whose next shot is a putback or tip are left out | Whether a left-out putback still counts as the previous shot for the next pair (D-024) |
 | 4 | | | | |
 | 5 | | | | |
 | 6 | | | | |
