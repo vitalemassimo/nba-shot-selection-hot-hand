@@ -53,6 +53,23 @@ def fit_clusters(shots: pd.DataFrame, cfg: dict) -> pd.DataFrame:
     return out
 
 
+def pairs_table(shots: pd.DataFrame, cfg: dict, ps: pd.DataFrame, cl: pd.DataFrame) -> pd.DataFrame:
+    """Pairs with outcomes and segment labels, from the shot table (with xFG, baseline and half).
+    Stage 7 calls this with modified pair rules."""
+    pairs = build_pairs(shots, cfg)
+    dist = cfg["features"]["distance_column"]
+    pairs["distance_vs_baseline_ft"] = pairs[dist] - pairs.baseline_distance_ft
+    pairs["prev_surprise"] = pairs.prev_made - pairs.prev_xfg
+    for z in ZONE_NAMES:
+        pairs[f"next_is_{z}"] = (pairs.zone == z).astype("int8")
+    pairs["next_is_three"] = (pairs.shot_value == 3).astype("int8")
+    pairs = pairs.merge(ps[["player_id", "season", "season_type", "season_no", "experience_group",
+                            "usage_tier", "all_star"]],
+                        on=["player_id", "season", "season_type"], how="left", validate="many_to_one")
+    return pairs.merge(cl[["player_id", "season", "cluster"]], on=["player_id", "season"],
+                       how="left", validate="many_to_one")  # D-035: playoffs use the RS cluster
+
+
 def build() -> pd.DataFrame:
     cfg = load_config()
     shots = flag_shots(load_cleaned(cfg), cfg)
@@ -70,21 +87,9 @@ def build() -> pd.DataFrame:
                                         - shots.baseline_distance_ft)
     shots.to_parquet(SHOTS, index=False)
 
-    pairs = build_pairs(shots, cfg)
-    dist = cfg["features"]["distance_column"]
-    pairs["distance_vs_baseline_ft"] = pairs[dist] - pairs.baseline_distance_ft
-    pairs["prev_surprise"] = pairs.prev_made - pairs.prev_xfg
-    for z in ZONE_NAMES:
-        pairs[f"next_is_{z}"] = (pairs.zone == z).astype("int8")
-    pairs["next_is_three"] = (pairs.shot_value == 3).astype("int8")
-
     ps = segments.build(shots, cfg)
     ps.to_csv(segments.PLAYER_SEASONS, index=False)
-    pairs = pairs.merge(ps[["player_id", "season", "season_type", "season_no", "experience_group",
-                            "usage_tier", "all_star"]],
-                        on=["player_id", "season", "season_type"], how="left", validate="many_to_one")
-    pairs = pairs.merge(cl[["player_id", "season", "cluster"]], on=["player_id", "season"],
-                        how="left", validate="many_to_one")  # D-035: playoffs use the RS cluster
+    pairs = pairs_table(shots, cfg, ps, cl)
     pairs.to_parquet(FEATURES, index=False)
     return pairs
 

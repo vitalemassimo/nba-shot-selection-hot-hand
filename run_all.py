@@ -40,6 +40,7 @@ RUNNERS = {
     4: lambda: run_notebook("03_features.ipynb"),
     5: lambda: run_notebook("04_core_test.ipynb"),
     6: lambda: run_notebook("05_segments.ipynb"),
+    7: lambda: run_notebook("06_robustness.ipynb"),
 }
 
 
