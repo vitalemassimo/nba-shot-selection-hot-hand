@@ -24,7 +24,7 @@ pairs:
   same_period_only: false       # primary spec allows pairs across a period break; tested in Stage 7
 
 segments:
-  veteran_min_season_number: 5  # veteran = 5th NBA season or later (D-008)
+  veteran_min_season_number: 10 # veteran = 10th NBA season or later (D-008, Massimo)
   usage_min_fga_season: 100     # min FGA in a player-season to enter usage tiers
   usage_tiers: 3                # tertiles of FGA per game within season
   cluster_min_fga_season: 200   # min FGA in a player-season to enter clustering
@@ -50,7 +50,6 @@ robustness:
   pair_gap_variants_seconds: [60, 120, 240, 480, null]   # null = no limit
   min_fga_variants: [50, 100, 200]
   heave_seconds_remaining: 3    # shots in the last N seconds of a period are "heaves"
-  garbage_time_margin: 20       # |score margin| >= this in the 4th quarter = garbage time
-  garbage_time_minutes_left: 5
+  garbage_time_margin: 20       # 4th quarter and |score margin| >= this = garbage time (D-022)
   # Survival rule (D-012): sign unchanged AND CI overlaps baseline estimate in >= 80% of variations
   survival_share: 0.8

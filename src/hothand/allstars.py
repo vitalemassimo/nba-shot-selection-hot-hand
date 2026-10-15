@@ -37,7 +37,9 @@ def _get_json(params: str, retries: int = 5) -> dict:
 def clean_name(name: str) -> str:
     """Strip footnote and injury markers, e.g. 'Stephen CurryINJ2' -> 'Stephen Curry'."""
     name = re.sub(r"\[.*?\]", "", str(name))
-    name = re.sub(r"(?<=[a-zà-ÿ.'])[A-Z]{2,}\d*$", "", name)  # INJ1, REP1, COVID2, NOTE1
+    # Footnote markers glued to the name (INJ1, REP1INJ3, COVID2) or after a space with a number
+    # (" REP3"). A spaced marker needs a digit so suffixes like "II" or "III" survive.
+    name = re.sub(r"(?:(?<=[a-zà-ÿ.'])(?:[A-Z]{2,}\d*)+|\s(?:[A-Z]{2,}\d+)+)$", "", name)
     return name.replace("*", "").replace("^", "").strip()
 
 
