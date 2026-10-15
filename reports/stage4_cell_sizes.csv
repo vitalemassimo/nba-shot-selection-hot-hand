@@ -1,0 +1,19 @@
+segment,season_type,group,pairs,players,meets_minimum
+experience_group,Playoffs,rookie,865,106,False
+experience_group,Playoffs,veteran,9336,149,True
+experience_group,Regular Season,rookie,40409,728,True
+experience_group,Regular Season,veteran,106185,229,True
+usage_tier,Playoffs,high,25136,203,True
+usage_tier,Playoffs,low,2116,263,True
+usage_tier,Playoffs,mid,6823,247,True
+usage_tier,Regular Season,high,314859,303,True
+usage_tier,Regular Season,low,51038,570,True
+usage_tier,Regular Season,mid,125945,513,True
+cluster,Playoffs,mid_range_scorers,11198,99,True
+cluster,Playoffs,rim_and_corner,6869,123,True
+cluster,Playoffs,rim_bigs,2934,51,True
+cluster,Playoffs,three_point_shooters,9273,146,True
+cluster,Regular Season,mid_range_scorers,122855,157,True
+cluster,Regular Season,rim_and_corner,106472,238,True
+cluster,Regular Season,rim_bigs,38095,97,True
+cluster,Regular Season,three_point_shooters,128156,234,True

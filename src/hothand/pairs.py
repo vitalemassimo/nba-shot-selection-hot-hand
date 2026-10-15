@@ -86,9 +86,11 @@ def build_pairs(shots: pd.DataFrame, cfg: dict) -> pd.DataFrame:
     s["prev_make_run"] = s.groupby(chain).make_run_through_this.shift(1)
     s["prev2_made"] = s.groupby(chain).shot_made.shift(2)
 
-    for col in ["shot_made", "coord_distance_ft", "shot_distance_ft", "zone", "shot_value",
-                "action_type", "game_elapsed_s"]:
+    for col in ["pbp_row", "shot_made", "coord_distance_ft", "shot_distance_ft", "zone",
+                "shot_value", "action_type", "game_elapsed_s"]:
         s[f"prev_{col}"] = prev[col]
+    if "xfg" in s:  # the previous shot's difficulty, when xFG has been attached
+        s["prev_xfg"] = g.xfg.shift(1)
     pairs = s[s.valid_pair].copy()
     pairs["prev_made"] = pairs.prev_shot_made.astype("int8")
     pairs["last_two"] = np.where(
@@ -147,3 +149,8 @@ def loo_baseline(shots: pd.DataFrame, group: list[str]) -> pd.DataFrame:
         name = "baseline_distance_ft" if c == "coord_distance_ft" else f"baseline_{c[2:]}"
         out[name] = loo.where(n > 1)
     return out
+
+
+def load_game_split() -> pd.DataFrame:
+    """The saved game split; game IDs are read as text so their leading zeros survive."""
+    return pd.read_csv(GAME_SPLIT, dtype={"game_id": str})

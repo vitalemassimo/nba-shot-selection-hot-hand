@@ -37,6 +37,7 @@ STAGES = {
 RUNNERS = {
     2: acquire.run,
     3: lambda: run_notebook("02_audit.ipynb"),
+    4: lambda: run_notebook("03_features.ipynb"),
 }
 
 

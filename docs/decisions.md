@@ -277,3 +277,37 @@ veterans' season counts).
 FGA per game, thirds among players with 100+ FGA) and carries into that season's playoffs.
 **Reason.** Playoff samples are short and many players would fall below the 100-FGA minimum.
 **Status.** Decided by Massimo, 2026-10-15.
+
+### D-032 · 2026-10-15 · xFG model: logistic regression (Massimo)
+**Finding.** On 20% of calibration-half games held out from fitting (172,568 shots): logistic
+regression log loss 0.6378, AUC 0.654, max calibration error 2.2 points; gradient boosting 0.6360,
+0.657, 1.7 points; no-model baseline log loss 0.6902. Plot: `reports/figures/stage4_xfg_calibration.png`.
+**Decision (Massimo).** Logistic regression (distance and angle as splines; zone, shot type and
+action type as categories; action types with fewer than 500 calibration shots pooled into
+"Other"). The boosted model's 0.3% gain is not "clearly better" (playbook 4.6).
+Fitted on all calibration-half analysis-population shots; never uses a shot result as a feature.
+**Limitation.** No defender information, so xFG measures location-based difficulty only; predictions
+mostly fall between 0.31 and 0.95.
+**Status.** Decided by Massimo, 2026-10-15.
+
+### D-033 · 2026-10-15 · Four playstyle clusters (Massimo)
+**Finding.** k-means on the five zone shares of 1,640 player-seasons (calibration half, regular
+season). Silhouette 0.26 (k=3), 0.25 (4), 0.22 (5), 0.22 (6), 0.22 (7). Stability (adjusted Rand
+index vs the reference fit; 20 seeds, 100 bootstrap resamples): k=3 seeds min 0.97, bootstrap median
+0.93; k=4 0.97 / 0.88; k=5 0.41 / 0.53; k=6 0.64 / 0.55; k=7 0.81 / 0.70. k >= 5 is not stable.
+Full table: `reports/stage4_cluster_stability.csv`.
+**Decision (Massimo).** k = 4, named from their average zone mix: rim bigs (204 player-seasons; 48%
+restricted area), mid-range scorers (397; 22% mid-range), rim and corner (474; 32% rim, 12% corner
+three), three-point shooters (565; 46% above-the-break three). Zone shares are not standardised.
+**Status.** Decided by Massimo, 2026-10-15.
+
+### D-034 · 2026-10-15 · Clustering minimum counted in the calibration half (Massimo)
+**Decision (Massimo).** A player-season needs at least 200 calibration-half regular-season shots
+(about 400 in a full season) to get a cluster; others are left out of H3 only.
+**Reason.** Each zone mix then rests on at least 200 shots.
+**Status.** Decided by Massimo, 2026-10-15.
+
+### D-035 · 2026-10-15 · Playoff cluster = regular-season cluster (Massimo)
+**Decision (Massimo).** A player's playoff shots carry his regular-season cluster of the same season,
+matching the usage-tier rule (D-031).
+**Status.** Decided by Massimo, 2026-10-15.

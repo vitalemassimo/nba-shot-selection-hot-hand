@@ -34,7 +34,8 @@ segments:
   veteran_min_season_number: 10 # veteran = 10th NBA season or later (D-008, Massimo)
   usage_min_fga_season: 100     # min FGA in a player-season to enter usage tiers
   usage_tiers: 3                # tertiles of FGA per game within season
-  cluster_min_fga_season: 200   # min FGA in a player-season to enter clustering
+  cluster_min_fga_season: 200   # min calibration-half regular-season shots to be clustered (D-034)
+  cluster_k: 4                  # D-033 (Massimo); k = 3 and 4 stable, 5-7 not
   cluster_k_candidates: [3, 4, 5, 6, 7]
   cluster_stability_seeds: 20
   cluster_bootstrap_resamples: 100
@@ -50,6 +51,8 @@ split:
 
 xfg:
   features: ["shot_distance", "shot_zone_basic", "shot_type", "action_type", "shot_angle"]
+  model: "logistic"             # D-032 (Massimo): logistic over gradient boosting
+  min_action_count: 500         # rarer action types pooled into "Other" (counted on calibration data)
   # Never include the previous shot's result as a feature.
 
 inference:
