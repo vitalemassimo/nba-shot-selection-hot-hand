@@ -36,6 +36,10 @@ Read this file at the start of every session, together with `docs/decisions.md`,
   streak states, leave-one-out baseline and game split. Claude must present every decision and
   interpretation to Massimo before it is used, and Massimo still decides every definition and
   threshold (rule 3) and declares the gate.
+- 2026-10-15, Massimo: Stage 5 code is delegated to Claude Code as well: Models 0 to 3, the
+  permutation test and the mixed-effects second method. Claude must present every modelling
+  decision before the final run and every result to Massimo, who writes the interpretation in
+  plain units, reproduces one number himself and declares the gate.
 
 ## Always Massimo's (never delegated)
 
