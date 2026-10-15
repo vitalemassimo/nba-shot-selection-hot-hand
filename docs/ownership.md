@@ -1,0 +1,56 @@
+# Ownership Split: who does what, per stage
+
+Project: nba-shot-selection-hot-hand
+Purpose: this file is the working agreement between Massimo and Claude Code. It also goes in `docs/ownership.md` so the repo shows what was decided, delegated and verified.
+
+## Instructions for Claude Code
+
+Read this file at the start of every session, together with `docs/decisions.md`, `docs/hypotheses.md` and `config.yaml`.
+
+1. For every item in a "Massimo writes or decides" cell, do not write the solution. Give hints, point to documentation, review what Massimo wrote, and explain trade-offs when asked.
+2. For every item in a "Claude Code helps with" cell, you may write the code, but explain what it does in plain language and keep diffs small enough to review.
+3. Never change a definition, threshold or hypothesis on your own. If you think one should change, say so and let Massimo decide and log it in `docs/decisions.md`.
+4. After finishing work on a stage, list what Massimo should verify from the "Massimo verifies" cell. Do not declare a gate passed yourself. Massimo declares it.
+5. Never use the previous shot's result as a feature in the xFG model. Never run the final analysis on the calibration half or tune on the analysis half.
+6. Flag anything that looks like a mechanical artifact, an off-by-one error in streak logic, or a result that seems too good.
+7. Keep co-authorship visible in commits. Do not rewrite history to hide it.
+
+## Ownership table
+
+| Stage | Massimo writes or decides | Claude Code helps with | Massimo verifies |
+|---|---|---|---|
+| 1 Setup | Folder choices, config values, predictions in `docs/hypotheses.md` (directional, with a reason) | Repo skeleton, pinned environment, `.gitignore`, Makefile or run_all script | A fresh clone installs and runs; predictions are committed before any data is collected |
+| 2 Data acquisition | Season window, data route, exclusions, the All-Star source | Download loops with caching, timeouts and retries; manifest and file hashing | Row counts per season are in the expected range; hand-compare a sample of shots across both routes; read the NBA.com Terms of Use |
+| 3 Audit and cleaning | Which checks matter, pass thresholds, every keep/drop/fix decision and its reason | Running each check per season and season type; attrition table code | Spot-check flagged rows in the raw data; re-running from raw reproduces the cleaned files exactly; every failed check has a `decisions.md` entry in his own words |
+| 4 Definitions and features | **Hand-writes:** shot-pair logic, streak states, leave-one-out baseline, game-level calibration/analysis split, segment thresholds | Unit-test scaffolding, xFG model boilerplate, clustering plots and stability checks | His own hand-made test sequences pass; hand-check 5 real player-games against raw data; xFG model excludes the previous shot's result; definitions tagged `definitions-v1` |
+| 5 Core test (H0) | **Hand-writes:** Models 0 to 3 and a first version of the permutation test; the interpretation in plain units | Clustered standard errors, speeding up permutations, the mixed-effects second method | Two methods agree in sign and rough size; reproduces one number by hand; result stated in feet and percentage points with intervals |
+| 6 Segments (H1 to H4) | Applies only the pre-registered rows; compares results with his written predictions | Interaction models, Holm correction, forest plot, cluster heat map | Minimum-sample cells enforced; any extra comparison labelled exploratory; Result column of `hypotheses.md` filled in, including misses |
+| 7 Robustness | **Writes the survival rule before running anything**; decides what counts as fragile | Loop over variations, specification curve, placebo tests | Placebo results make sense; fragility is reported plainly, not hidden |
+| 8 Dashboard | What question each chart answers; all wording, including limitations | Streamlit code, pre-aggregated data loading | Displayed-vs-CSV check passes; two outside people can state the finding unaided; no leaderboard of individuals |
+| 9 Repo and README | The README text, especially the limitations section | Makefile, linting, cold-clone troubleshooting | A cold clone reproduces the headline numbers from the README alone; every README number matches a committed table |
+| 10 LinkedIn post or blog | Writes it himself | Proofreading and checking numbers against the README | Every claim matches a committed table; links work when logged out |
+
+## Always Massimo's (never delegated)
+
+- Hypotheses and predictions
+- Definitions (consecutive shot, streak state, baseline, segments)
+- Interpretation of results and the limitations
+- The LinkedIn post or blog text
+- Declaring a gate passed
+
+## Verification log
+
+Fill this in as you go. One row per stage once you have personally checked the "Massimo verifies" items.
+
+| Stage | Date verified | What I checked | What I changed or fixed | Open questions |
+|---|---|---|---|---|
+| 1 | | | | |
+| 2 | | | | |
+| 3 | | | | |
+| 4 | | | | |
+| 5 | | | | |
+| 6 | | | | |
+| 7 | | | | |
+| 8 | | | | |
+| 9 | | | | |
+| 10 | | | | |

@@ -5,17 +5,25 @@ Stages that are not implemented yet are skipped with a message.
 """
 
 import argparse
+import os
 import subprocess
 import sys
+from pathlib import Path
 
 from hothand import acquire
 from hothand.config import ROOT, load_config
 
 
 def run_notebook(name: str) -> None:
-    """Execute a notebook in place, so its outputs and the files it writes are regenerated."""
-    subprocess.run([sys.executable, "-m", "jupyter", "nbconvert", "--to", "notebook", "--execute",
-                    "--inplace", name], cwd=ROOT / "notebooks", check=True)
+    """Execute a notebook in place, so its outputs and the files it writes are regenerated.
+
+    Calls nbconvert as a module of this interpreter and puts this environment's bin directory first
+    on PATH, so the kernel runs with the pinned packages and not another Python on the machine.
+    """
+    env = {**os.environ, "PATH": f"{Path(sys.executable).parent}{os.pathsep}{os.environ['PATH']}"}
+    subprocess.run([sys.executable, "-m", "nbconvert", "--to", "notebook", "--execute",
+                    "--inplace", name], cwd=ROOT / "notebooks", check=True, env=env)
+
 
 STAGES = {
     2: "acquire",
