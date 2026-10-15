@@ -40,6 +40,10 @@ Read this file at the start of every session, together with `docs/decisions.md`,
   permutation test and the mixed-effects second method. Claude must present every modelling
   decision before the final run and every result to Massimo, who writes the interpretation in
   plain units, reproduces one number himself and declares the gate.
+- 2026-10-15, Massimo: for the H0 interpretation, Claude provided a fact sheet and a reference
+  draft at Massimo's request; Massimo wrote his own version, and Claude made three edits he
+  approved (a sentence labelling his basketball-based explanations as his reading, "within the same
+  quarter", and the order of the prediction sentence).
 
 ## Always Massimo's (never delegated)
 
