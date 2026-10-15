@@ -156,7 +156,7 @@ breaks a pair rather than being silently skipped. Exact thresholds go into confi
 ### D-019 · 2026-10-15 · Drop 8 shots with conflicting shooter attribution
 **Finding.** 8 shots out of 1,804,934 (all seasons) either have no play-by-play event with the same
 game and event number, or the play-by-play names a different player (e.g. shot table: Rudy Gay,
-play-by-play: Markkanen). One 2025-26 case maps to a team "Heave" event.
+play-by-play: L. Markkanen). One 2025-26 case maps to a team "Heave" event.
 **Decision.** Drop them in structural cleaning (counted in the attrition table).
 **Reason.** They cannot be placed in the event sequence with confidence, so any pair built on them
 could be wrong. 8 shots cannot move any result.
@@ -198,7 +198,7 @@ the last 3 s of a period. Data sanity ranges: 150,000-240,000 attempts per regul
 
 
 ### D-024 · 2026-10-15 · Leave out pairs where the next shot is a putback or tip (Massimo)
-**Finding (flagged by Claude in the Stage 3 spot-check).** In 2024-25 game 0022400002, Stewart misses
+**Finding (flagged by Claude in the Stage 3 spot-check).** In 2024-25 game 0022400002, I. Stewart misses
 a tip at 1:40 of Q2, rebounds, misses another tip at 1:39 and scores a putback at 1:36. With the D-006
 pair definition each of these is "after a miss, the next shot is at the rim", which is the H0
 prediction produced by rebounding mechanics rather than by a shot-selection decision.
