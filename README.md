@@ -17,8 +17,20 @@ the sequence bias are accounted for, a player is not more likely to make his nex
 
 *Shot map from the [live dashboard](https://nba-shot-selection.streamlit.app/) (all players, all
 seasons). Each 2 × 2 ft square shows the share of next shots there after a make minus the share after a
-miss, in percentage points: red means more often after a make, blue more often after a miss. Dark
-squares had fewer than 50 shots on a side.*
+miss, in percentage points: red means more often after a make, blue more often after a miss. Gaps
+are squares with fewer than 50 shots on a side.*
+
+## What makes this rigorous
+
+- **Predictions written before the data:** hypotheses committed on 14 October 2026, before any data
+  was downloaded ([docs/hypotheses.md](docs/hypotheses.md)).
+- **Every choice on record:** 59 dated decisions, each with its reason ([docs/decisions.md](docs/decisions.md)).
+- **Built on one half, tested on the other:** game data was split at random. The difficulty model and
+  playstyle groups come from one half; every test runs on the other.
+- **The classic streak trap corrected:** a shuffle test removes the bias that misled early hot-hand
+  studies (Miller and Sanjurjo, 2018).
+- **Tried to break it:** 24 robustness checks, a placebo, and a second statistical model.
+- **Fully reproducible:** a fresh clone reran everything from raw data and matched every result exactly.
 
 ## Question
 
