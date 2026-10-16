@@ -477,3 +477,14 @@ player and the season (only seasons where he has 100+ pairs on each side).
 **Status.** Decided by Massimo, 2026-10-16.
 **Rerun 2026-10-16 (cosmetic, Stage 7).** Specification-curve labels were clipped; figure export fixed
 (`bbox_inches="tight"`), notebook rerun, `results_robustness.csv` verified byte-identical.
+
+### D-059 · 2026-10-16 · Cold-clone test
+**Finding.** A fresh clone from GitHub on 2026-10-16, with a new environment (`make setup`, 32 s) and the
+full pipeline from raw data (`make all`, 75 min including downloads), reproduced every committed
+results table byte for byte: results_core, results_segments, results_robustness, all dashboard
+tables, the game split, segment labels, clusters and the cleaned-file content hashes. The only
+difference: NBA.com's live `PlayerIndex` endpoint had moved a few players between its files since
+2026-10-14 (row counts 108 -> 107, 98 -> 99, 137 -> 138, 133 -> 132); the player set and first
+seasons used by the analysis were unaffected. The bulk shot files and official totals were identical.
+**Consequence.** Live NBA.com endpoints can drift; the manifest's hashes show whether a re-download
+matches the original. Noted in the README.
