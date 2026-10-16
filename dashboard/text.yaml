@@ -1,10 +1,10 @@
-# Every word a visitor reads on the dashboard. Written by Massimo (docs/ownership.md, Stage 8).
+# Every word a visitor reads on the dashboard (docs/ownership.md, Stage 8).
 
 title: "NBA shot selection after makes and misses"
 
 headline:
   question: "What happens to a player's next shot after a make vs a miss?"
-  # From Massimo's H0 result (docs/hypotheses.md)
+  # From the H0 result (docs/hypotheses.md)
   finding: >-
     After a missed shot, most players will move closer to the basket on their next attempt to try
     and find an easier shot, and after a made shot, they move farther out, probably moved by
@@ -24,7 +24,7 @@ explorer:
     Pick a group and an outcome: shot distance, or the share of rim, paint, mid-range, corner-three, above-the-break-three or all three-point attempts. The two bars show the next shot after a miss and after a make, each measured against the player’s own usual shot. The big number is the shift, with its 95% interval and the number of pairs and players behind it.
 
 shotmap:
-  # Labels added 2026-10-16 for more descriptive charts; approved by Massimo
+  # Labels added 2026-10-16 for more descriptive charts
   hover: "Distance from the basket: {dist}<br>Share of next shots in this square: {make} after a make, {miss} after a miss<br>Difference: {diff} percentage points<br>Shots in this square: {n_make} after a make, {n_miss} after a miss"
   colorbar: "Make − miss (pp)"
   question: "Where on the court does the next shot come from after a make vs a miss?"
@@ -32,7 +32,7 @@ shotmap:
     Each square is 2 × 2 ft. The colour shows the share of next shots in that square after a make minus the share after a miss, in percentage points: red means more often after a make, blue more often after a miss. Only squares with 50 or more shots on each side are shown. For all players together, red appears just beyond the arc and blue at the rim.
 
 players:
-  # Labels added 2026-10-16 for more descriptive charts; approved by Massimo
+  # Labels added 2026-10-16 for more descriptive charts
   map_title: "Where this player's next shot goes after a make vs a miss"
   map_note: "Each 6 × 6 ft square shows the share of this player's next shots taken there after a make minus after a miss, in percentage points. Only squares with at least 5 shots on each side are shown, so parts of the court stay empty and each square rests on few shots."
   compare_title: "Is this player's overall shift unusual for his groups?"
@@ -48,7 +48,7 @@ method:
     The data cover 8 seasons (2018-19 to 2025-26), regular season and playoffs, about 1.8 million shots. A pair is two consecutive shots by the same player in the same game, at most 4 minutes of game clock apart. Putbacks, tips, heaves and backcourt shots are left out. Each next shot is compared with that player’s own usual shot. Games were split at random into two halves: one half built the difficulty model and the playstyles, and the other ran every test. The model controls for where the previous shot was taken and how hard it was, the game situation and the player-season. The results were checked with a second model and a shuffle test.
   streak_bias: |-
     In short sequences of shots, simply comparing shots after a make with shots after a miss gives a biased answer (Miller and Sanjurjo, 2018). To correct for this, the order of each player’s shots within a game was shuffled 1,000 times, and the real result was compared with the shuffled ones.
-  # From Massimo's README robustness paragraph
+  # From the README robustness paragraph
   robustness: >-
     In short, the result is robust in direction, but its size depends on how consecutive shots are
     defined.

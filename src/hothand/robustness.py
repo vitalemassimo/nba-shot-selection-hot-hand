@@ -1,7 +1,7 @@
 """Stage 7: try to break the headline (playbook 7.1-7.6).
 
 Every variation changes one thing and re-runs Model 3 (D-048). The survival rule (D-045) and the
-counting rules (D-046) are Massimo's and were committed before anything here ran.
+counting rules (D-046) were committed before anything here ran.
 """
 
 import copy
@@ -286,7 +286,7 @@ def cluster_variants(f: pd.DataFrame, shots: pd.DataFrame, cfg: dict, half: str)
 
 
 def survival(table: pd.DataFrame, baseline: float, share: float) -> dict:
-    """The automated check of D-045 on the counted rows (the verdict is Massimo's)."""
+    """The automated check of D-045 on the counted rows (the verdict is the author's)."""
     c = table[table.counted]
     sign_ok = bool((c.estimate > 0).all())
     contains = (c.ci_low <= baseline) & (baseline <= c.ci_high)

@@ -1,6 +1,6 @@
 """Stage 4: shot pairs, streak states, the game split and the leave-one-out baseline.
 
-Definitions are Massimo's (docs/decisions.md); every threshold comes from config.yaml.
+Definitions are in docs/decisions.md; every threshold comes from config.yaml.
   D-006  a pair = same player, same game, no other attempt by that player in between,
          at most `max_gap_game_seconds` of game clock apart
   D-017  shot order = play-by-play file order (`pbp_row`)

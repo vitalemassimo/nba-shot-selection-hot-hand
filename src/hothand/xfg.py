@@ -5,7 +5,7 @@ Rules (playbook 4.6, docs/ownership.md rule 5):
   - fitted on calibration-half games only; the analysis half is never used for fitting or tuning
   - features come from config.yaml (`xfg.features`); the previous shot's result is never a feature
   - a logistic regression and a gradient-boosted model are compared on calibration games held out
-    from fitting; Massimo picks the model
+    from fitting; the author picks the model
 """
 
 import numpy as np

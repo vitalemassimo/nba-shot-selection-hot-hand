@@ -1,7 +1,7 @@
 """NBA shot selection after makes and misses: interactive dashboard (Stage 8).
 
 Reads only pre-aggregated tables in data/processed/ and never computes a result itself (playbook
-8.2). All wording comes from dashboard/text.yaml (Massimo's). Run: streamlit run dashboard/app.py
+8.2). All wording comes from dashboard/text.yaml. Run: streamlit run dashboard/app.py
 """
 
 from pathlib import Path
