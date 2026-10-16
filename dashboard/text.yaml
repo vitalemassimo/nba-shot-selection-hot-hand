@@ -15,6 +15,7 @@ headline:
   hot_hand: >-
     The data reveals no hot hand: a player is not more likely to make his subsequent shot after a
     make if the difficulty of the shot and the sequence bias are taken into consideration.
+  make_prob_label: "[proposed] **Make probability after a make** (vs a miss, bias-corrected)"
   forest_caption: "[TO WRITE: Massimo] one line explaining the chart of groups"
 
 explorer:

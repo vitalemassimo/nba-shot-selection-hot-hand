@@ -435,3 +435,10 @@ make minus after a miss (analysis half, pre-computed bins).
 **Decision (Massimo).** Deploy from the GitHub repo to Streamlit Community Cloud when the repo goes
 public (Stage 9); built and tested locally until then.
 **Status.** Decided by Massimo, 2026-10-16.
+
+### D-053 · 2026-10-16 · Headline make-probability card shows both shuffles (Massimo)
+**Decision (Massimo).** The dashboard's make-probability card shows both bias-corrected permutation
+results with their p-values: -0.4 pp (shuffle within game, p = 0.002) and +0.1 pp (shuffle within
+quarter, p = 0.464), so the card matches the "no hot hand" finding instead of showing one number
+that could read as a negative streak effect.
+**Status.** Decided by Massimo, 2026-10-16.

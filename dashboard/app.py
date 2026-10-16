@@ -36,11 +36,12 @@ def source(*tables: str) -> None:
 
 def headline_numbers(core: pd.DataFrame) -> dict:
     m3 = core[(core.model == "Model 3") & (core.treatment == "prev_made")].set_index("outcome")
-    perm = core[(core.method == "permutation")
-                & (core.within == "game_id+player_id")].set_index("outcome")
+    perm = core[(core.method == "permutation") & (core.outcome == "next_surprise")]
+    perm = perm.set_index("within")
     return {"shift_ft": m3.loc["distance_vs_baseline_ft"],
             "threes_pp": m3.loc["rel_three"],
-            "make_prob": perm.loc["next_surprise"]}
+            "make_prob_game": perm.loc["game_id+player_id"],
+            "make_prob_quarter": perm.loc["game_id+player_id+period"]}
 
 
 def forest(ex: pd.DataFrame) -> go.Figure:
@@ -123,9 +124,13 @@ def main() -> None:
         t3 = h["threes_pp"]
         c2.metric("Shift in three-point share", f"{100 * t3.estimate:+.1f} pp",
                   help=f"95% CI {100 * t3.ci_low:+.1f} to {100 * t3.ci_high:+.1f} pp")
-        mp = h["make_prob"]
-        c3.metric("Make probability after a make", f"{100 * mp.estimate:+.1f} pp",
-                  help=f"bias-corrected, p = {mp.p_two_sided:.3f}")
+        with c3:  # D-053: both shuffle versions, so the card matches "no hot hand"
+            st.markdown(TEXT["headline"]["make_prob_label"])
+            for key, label in [("make_prob_game", "Shuffle within game"),
+                               ("make_prob_quarter", "Shuffle within quarter")]:
+                mp = h[key]
+                st.metric(label, f"{100 * mp.estimate:+.1f} pp")
+                st.caption(f"p = {mp.p_two_sided:.3f}")
         st.write(TEXT["headline"]["hot_hand"])
         st.plotly_chart(forest(data["explorer"]), width="stretch")
         st.caption(TEXT["headline"]["forest_caption"])

@@ -17,11 +17,12 @@ def main() -> int:
     core = pd.read_csv(P / "results_core.csv")
     ex = pd.read_csv(P / "dashboard" / "explorer.csv")
     m3 = core[(core.model == "Model 3") & (core.treatment == "prev_made")].set_index("outcome")
-    perm = core[(core.method == "permutation") & (core.within == "game_id+player_id")].set_index("outcome")
+    perm = core[(core.method == "permutation") & (core.outcome == "next_surprise")].set_index("within")
     expected = {
         "Shift in distance": f"{m3.loc['distance_vs_baseline_ft', 'estimate']:.2f} ft",
         "Shift in three-point share": f"{100 * m3.loc['rel_three', 'estimate']:+.1f} pp",
-        "Make probability after a make": f"{100 * perm.loc['next_surprise', 'estimate']:+.1f} pp",
+        "Shuffle within game": f"{100 * perm.loc['game_id+player_id', 'estimate']:+.1f} pp",
+        "Shuffle within quarter": f"{100 * perm.loc['game_id+player_id+period', 'estimate']:+.1f} pp",
     }
     failures = []
     at = AppTest.from_file(str(ROOT / "dashboard" / "app.py"), default_timeout=120).run()
