@@ -9,7 +9,7 @@ After a make, NBA players take their next shot on average 1.5 ft (46 cm) farther
 than after a miss (95% interval 1.4 to 1.6 ft). The data shows no hot hand: once shot difficulty and
 the sequence bias are accounted for, a player is not more likely to make his next shot after a make.
 
-**[Live dashboard](https://nba-shot-selection.streamlit.app/)** · [Pre-registered hypotheses and results](docs/hypotheses.md) · [Decision log](docs/decisions.md)
+**[Live dashboard](https://nba-shot-selection.streamlit.app/)** · [Pre-registered hypotheses and results](docs/hypotheses.md) · [Decision log](docs/decisions.md) · [LinkedIn post](https://www.linkedin.com/posts/massimo-vitale-8aa09233b_sportsanalytics-nba-datascience-share-7516887586095939585-SkXP/)
 
 ![H0 shift by group](reports/figures/stage6_forest.png)
 
