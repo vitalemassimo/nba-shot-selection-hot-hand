@@ -10,7 +10,7 @@ import subprocess
 import sys
 from pathlib import Path
 
-from hothand import acquire
+from hothand import acquire, dashboard_data
 from hothand.config import ROOT, load_config
 
 
@@ -32,6 +32,7 @@ STAGES = {
     5: "core_test",
     6: "segments",
     7: "robustness",
+    8: "dashboard_data",
 }
 
 RUNNERS = {
@@ -41,6 +42,7 @@ RUNNERS = {
     5: lambda: run_notebook("04_core_test.ipynb"),
     6: lambda: run_notebook("05_segments.ipynb"),
     7: lambda: run_notebook("06_robustness.ipynb"),
+    8: dashboard_data.run,
 }
 
 
