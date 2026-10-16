@@ -50,6 +50,8 @@ of which 8 were dropped because the two sources named different shooters. They f
 of consecutive shots; games were split at random into two halves, and every test uses the 535,659
 pairs of the analysis half. Shots and play-by-play data come from NBA.com, via the nba_api package and the shufinskiy/nba_data bulk dataset. All-Star rosters come from Wikipedia. Raw data is not redistributed. This project is not affiliated with or endorsed by the NBA.
 
+Data source: [NBA.com Stats](https://www.nba.com/stats), accessed through [nba_api](https://github.com/swar/nba_api) and the [shufinskiy/nba_data](https://github.com/shufinskiy/nba_data) bulk dataset. This is a personal, non-commercial research project; the NBA statistics are used only for non-commercial analysis, in line with the NBA.com Terms of Use.
+
 ## Method
 
 The data cover 8 seasons (2018-19 to 2025-26), regular season and playoffs, about 1.8 million shots. A pair is two consecutive shots by the same player in the same game, at most 4 minutes of game clock apart. Putbacks, tips, heaves and backcourt shots are left out. Each next shot is compared with that player’s own usual shot. Games were split at random into two halves: one half built the difficulty model and the playstyles, and the other ran every test. The model controls for where the previous shot was taken and how hard it was, the game situation and the player-season. The results were checked with a second model and a shuffle test.

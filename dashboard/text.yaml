@@ -60,7 +60,7 @@ method:
     * The placebo test was small but not zero (+0.07 ft), so some leftover confounding is possible.
     * The data cover one league and 8 seasons.
   data_credit: |-
-    Shots and play-by-play data come from NBA.com, via the nba_api package and the shufinskiy/nba_data bulk dataset. All-Star rosters come from Wikipedia. Raw data is not redistributed. This project is not affiliated with or endorsed by the NBA.
+    Shots and play-by-play data come from NBA.com, via the nba_api package and the shufinskiy/nba_data bulk dataset. All-Star rosters come from Wikipedia. Raw data is not redistributed. This project is not affiliated with or endorsed by the NBA. Data source: [NBA.com Stats](https://www.nba.com/stats), accessed through [nba_api](https://github.com/swar/nba_api) and the [shufinskiy/nba_data](https://github.com/shufinskiy/nba_data) bulk dataset. This is a personal, non-commercial research project; the NBA statistics are used only for non-commercial analysis, in line with the NBA.com Terms of Use.
 
 downloads:
   intro: |-
