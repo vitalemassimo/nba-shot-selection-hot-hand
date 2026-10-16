@@ -1,0 +1,22 @@
+cff-version: 1.2.0
+message: "If you use this work, please cite it as below."
+title: "NBA Shot Selection and the Hot Hand"
+abstract: >-
+  A pre-registered, reproducible study of how NBA players change their next shot after a make or a
+  miss, using 1.8 million field-goal attempts from 2018-19 to 2025-26, with an interactive dashboard.
+authors:
+  - family-names: Vitale
+    given-names: Massimo
+    affiliation: IE University
+type: software
+version: results-v1
+date-released: 2026-10-16
+license: MIT
+repository-code: "https://github.com/vitalemassimo/nba-shot-selection-hot-hand"
+url: "https://nba-shot-selection.streamlit.app/"
+keywords:
+  - nba
+  - sports analytics
+  - hot hand
+  - behavioral economics
+  - decision making

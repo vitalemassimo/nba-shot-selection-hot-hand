@@ -344,7 +344,7 @@ effect 0.002, p = 0.90); on synthetic streaky shots it detects the effect (tests
 ### D-040 · 2026-10-15 · Stage 5 run protocol (playbook 5.3, 5.5, 5.7)
 **Protocol.** Code was developed and debugged on the calibration half only; no estimate from it was
 shown to the author before D-036 to D-039 were decided. The final analysis runs once on the analysis
-half via `notebooks/04_core_test.ipynb`. The headline is Model 3's previous-shot-made coefficient
+half via `notebooks/03_core_test.ipynb`. The headline is Model 3's previous-shot-made coefficient
 on distance vs baseline; the second method is a mixed model with a random intercept per player and
 the Model 2 covariates. Any rerun of the final analysis gets a dated entry here with its reason.
 **Run log.** Final analysis-half run: 2026-10-15, notebook committed unrun at e89be31, specifications at

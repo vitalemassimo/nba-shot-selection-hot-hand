@@ -115,7 +115,7 @@ data/raw/          downloaded files (not committed); manifest.csv is committed
 data/interim/      cleaned shot tables (not committed)
 data/processed/    results tables, game split, segment labels, dashboard tables (committed)
 docs/              hypotheses (pre-registered), decisions log, data dictionary, ownership
-notebooks/         02_audit, 03_features, 04_core_test, 05_segments, 06_robustness
+notebooks/         01_audit, 02_features, 03_core_test, 04_segments, 05_robustness
 src/hothand/       pipeline code (acquire, clean, pairs, xfg, clusters, core, segtests, robustness)
 tests/             unit tests (pair and streak logic, permutation test, possession flag, ...)
 dashboard/         Streamlit app, its wording (text.yaml) and the displayed-vs-CSV check
@@ -130,6 +130,14 @@ reports/figures/   charts used in the README and the dashboard
   small numbers. *Econometrica*, 86(6), 2019-2047.
 - Bocskocsky, A., Ezekowitz, J., and Stein, C. (2014). The hot hand: A new approach to an old
   "fallacy". MIT Sloan Sports Analytics Conference.
+
+## How this project was built
+
+I designed the study, wrote the pre-registered predictions, made every analytical decision (each one
+is logged with its reason in [docs/decisions.md](docs/decisions.md)) and wrote the interpretation of
+the results. The code for the data pipeline, statistical models and dashboard was written with
+[Claude Code](https://claude.com/claude-code), Anthropic's AI coding assistant, from those decisions;
+every commit is co-authored accordingly. Who did what at each stage: [docs/ownership.md](docs/ownership.md).
 
 ## Author
 

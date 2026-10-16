@@ -37,11 +37,11 @@ STAGES = {
 
 RUNNERS = {
     2: acquire.run,
-    3: lambda: run_notebook("02_audit.ipynb"),
-    4: lambda: run_notebook("03_features.ipynb"),
-    5: lambda: run_notebook("04_core_test.ipynb"),
-    6: lambda: run_notebook("05_segments.ipynb"),
-    7: lambda: run_notebook("06_robustness.ipynb"),
+    3: lambda: run_notebook("01_audit.ipynb"),
+    4: lambda: run_notebook("02_features.ipynb"),
+    5: lambda: run_notebook("03_core_test.ipynb"),
+    6: lambda: run_notebook("04_segments.ipynb"),
+    7: lambda: run_notebook("05_robustness.ipynb"),
     8: dashboard_data.run,
 }
 
