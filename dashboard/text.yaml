@@ -1,0 +1,46 @@
+# Every word a visitor reads on the dashboard. Written by Massimo (docs/ownership.md, Stage 8).
+# Lines marked [TO WRITE: Massimo] or [proposed] are waiting for his wording or approval.
+
+title: "NBA shot selection after makes and misses"
+
+headline:
+  question: "[proposed] What happens to a player's next shot after a make vs a miss?"
+  # From Massimo's H0 result (docs/hypotheses.md)
+  finding: >-
+    After a missed shot, most players will move closer to the basket on their next attempt to try
+    and find an easier shot, and after a made shot, they move farther out, probably moved by
+    confidence. Put together, the next shot after a make is 1.5 ft (46 cm) farther than after a
+    miss (95% interval 1.4 to 1.6 ft), and its shot mix holds 5.4 points more threes and 5.2
+    points fewer rim attempts.
+  hot_hand: >-
+    The data reveals no hot hand: a player is not more likely to make his subsequent shot after a
+    make if the difficulty of the shot and the sequence bias are taken into consideration.
+  forest_caption: "[TO WRITE: Massimo] one line explaining the chart of groups"
+
+explorer:
+  question: "[proposed] Does that shift differ by player group, and for which outcome?"
+  help: "[TO WRITE: Massimo] how to read the explorer (after a miss, after a make, the shift)"
+
+shotmap:
+  question: "[proposed] Where on the court does the next shot come from after a make vs a miss?"
+  help: "[TO WRITE: Massimo] red = more often after a make, blue = more often after a miss"
+
+players:
+  question: "[proposed] How does one player's shift compare with his group's?"
+  warning: >-
+    [TO WRITE: Massimo] warning that individual estimates are noisy and must not be ranked
+
+method:
+  summary: "[TO WRITE: Massimo] plain-language summary of the method"
+  streak_bias: "[TO WRITE: Massimo] one or two sentences on the finite-sequence (streak) bias"
+  # From Massimo's README robustness paragraph
+  robustness: >-
+    In short, the result is robust in direction, but its size depends on how consecutive shots are
+    defined.
+  limitations: "[TO WRITE: Massimo] limitations (defenders, location-only difficulty, free throws, observational data)"
+  data_credit: >-
+    [TO WRITE: Massimo] data credit: NBA.com via nba_api and the shufinskiy/nba_data bulk dataset;
+    not affiliated with or endorsed by the NBA
+
+downloads:
+  intro: "[TO WRITE: Massimo] one line inviting readers to check the numbers"

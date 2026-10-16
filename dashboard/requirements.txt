@@ -1,0 +1,6 @@
+# Streamlit Community Cloud installs these for the dashboard only (it reads committed CSVs).
+streamlit==1.66.0
+pandas==3.0.6
+numpy==2.5.4
+plotly==7.1.0
+PyYAML==6.0.3

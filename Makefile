@@ -1,6 +1,6 @@
 PY := PYTHONPATH=src .venv/bin/python
 
-.PHONY: setup test lint all data verify-data allstars audit features core segments robustness
+.PHONY: setup test lint all data verify-data allstars audit features core segments robustness dashboard-data dashboard-check dashboard
 setup:  ## create the environment from the lock file
 	python3 -m venv .venv
 	$(PY) -m pip install -r requirements-lock.txt
@@ -27,3 +27,9 @@ segments:  ## Stage 6: H1-H4 on the analysis half
 	$(PY) run_all.py --stage 6
 robustness:  ## Stage 7: variations, specification curve, placebos (analysis half)
 	$(PY) run_all.py --stage 7
+dashboard-data:  ## Stage 8: pre-aggregate the tables the dashboard reads
+	$(PY) -m hothand.dashboard_data
+dashboard-check:  ## Stage 8: displayed-vs-CSV check (run before every deploy)
+	$(PY) dashboard/check_numbers.py
+dashboard:  ## Stage 8: run the dashboard locally
+	.venv/bin/streamlit run dashboard/app.py

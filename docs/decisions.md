@@ -414,3 +414,24 @@ later shot's distance, zone and xFG, mirroring how Model 3 controls for the prev
 **Run log (Stage 7).** First analysis-half run, 2026-10-15, crashed while drawing the specification
 curve (a matplotlib colour argument); nbconvert does not save a failed notebook, so no Stage 7 result
 was seen. Plot code fixed (no analysis change) and the notebook run again.
+
+### D-049 · 2026-10-16 · Dashboard: make probability for all players only (Massimo)
+**Decision (Massimo).** The dashboard shows the make-probability (hot-hand) result only for all
+players, from the bias-corrected permutation test (Stage 5). No per-group make-probability shifts.
+**Status.** Decided by Massimo, 2026-10-16.
+
+### D-050 · 2026-10-16 · Dashboard: player lookup with 100+ pairs each side (Massimo)
+**Decision (Massimo).** The player lookup shows only player-seasons with at least 100 analysis-half
+pairs after a make and 100 after a miss, next to the player's group, with intervals and a noise
+warning. No ranking or sorting by size.
+**Status.** Decided by Massimo, 2026-10-16.
+
+### D-051 · 2026-10-16 · Dashboard: shot map as a difference map (Massimo)
+**Decision (Massimo).** One half-court map per group: share of next shots in each court bin after a
+make minus after a miss (analysis half, pre-computed bins).
+**Status.** Decided by Massimo, 2026-10-16.
+
+### D-052 · 2026-10-16 · Dashboard hosting: Streamlit Community Cloud (Massimo)
+**Decision (Massimo).** Deploy from the GitHub repo to Streamlit Community Cloud when the repo goes
+public (Stage 9); built and tested locally until then.
+**Status.** Decided by Massimo, 2026-10-16.
