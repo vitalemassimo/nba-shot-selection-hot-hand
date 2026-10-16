@@ -3,9 +3,10 @@ and never computes a result itself). Analysis half only. Output: data/processed/
 
   explorer.csv  Model 3 shift (after make minus after miss) per group and outcome, with the
                 after-make and after-miss means vs the player's baseline (display, D-041 design)
-  shotmap.csv   share of next shots per court bin after a make minus after a miss, per group (D-051)
+  shotmap.csv   share of next shots per court bin after a make minus after a miss, per group and
+                season (D-051, D-058)
   players.csv   player-seasons with 100+ pairs after a make and 100+ after a miss (D-050)
-  player_zones.csv  zone shares after a make and after a miss for those player-seasons (D-055)
+  player_bins.csv  the same map per player-season, 6 x 6 ft squares (D-057)
 """
 
 import numpy as np
@@ -32,6 +33,8 @@ BIN_FT = 2.0
 COURT_X = (-25.0, 25.0)
 COURT_Y = (-5.0, 35.0)
 MIN_BIN_SHOTS = 50
+PLAYER_BIN_FT = 6.0
+PLAYER_MIN_BIN_SHOTS = 5
 PLAYER_MIN_EACH_SIDE = 100
 
 
@@ -83,31 +86,51 @@ def explorer(d: pd.DataFrame, cfg: dict) -> pd.DataFrame:
     return pd.DataFrame(rows)
 
 
-def shotmap(d: pd.DataFrame) -> pd.DataFrame:
-    """Share of next shots per 2x2 ft bin after a make minus after a miss, per group (D-051).
-    Bins with fewer than MIN_BIN_SHOTS shots in either condition are left out."""
-    xe = np.arange(COURT_X[0], COURT_X[1] + BIN_FT, BIN_FT)
-    ye = np.arange(COURT_Y[0], COURT_Y[1] + BIN_FT, BIN_FT)
+def diff_bins(d: pd.DataFrame, mask: pd.Series, bin_ft: float, min_shots: int) -> list[dict]:
+    """Share of next shots per square after a make minus after a miss, for the rows in `mask`.
+    Squares with fewer than `min_shots` shots in either condition are left out."""
+    half = bin_ft / 2  # squares centred on the basket (x = 0)
+    xe = np.arange(-half - bin_ft * np.ceil((COURT_X[1] - half) / bin_ft), COURT_X[1] + bin_ft,
+                   bin_ft)
+    ye = np.arange(COURT_Y[0], COURT_Y[1] + bin_ft, bin_ft)
     x, y = d.loc_x / 10, d.loc_y / 10
+    parts = {}
+    for made in (0, 1):
+        sel = mask & (d.prev_made == made)
+        parts[made], _, _ = np.histogram2d(x[sel], y[sel], bins=[xe, ye])
+    n0, n1 = parts[0].sum(), parts[1].sum()
     rows = []
-    for family, label, mask in groups(d):
-        parts = {}
-        for made in (0, 1):
-            sel = mask & (d.prev_made == made)
-            h, _, _ = np.histogram2d(x[sel], y[sel], bins=[xe, ye])
-            parts[made] = h
-        n0, n1 = parts[0].sum(), parts[1].sum()
-        for i in range(len(xe) - 1):
-            for j in range(len(ye) - 1):
-                c0, c1 = parts[0][i, j], parts[1][i, j]
-                if min(c0, c1) < MIN_BIN_SHOTS:
-                    continue
-                rows.append({"family": family, "group": label, "x_ft": xe[i] + BIN_FT / 2,
-                             "y_ft": ye[j] + BIN_FT / 2, "shots_after_miss": int(c0),
-                             "shots_after_make": int(c1),
-                             "share_after_miss_pct": 100 * c0 / n0,
-                             "share_after_make_pct": 100 * c1 / n1,
-                             "diff_pp": 100 * (c1 / n1 - c0 / n0)})
+    for i in range(len(xe) - 1):
+        for j in range(len(ye) - 1):
+            c0, c1 = parts[0][i, j], parts[1][i, j]
+            if min(c0, c1) < min_shots:
+                continue
+            rows.append({"x_ft": xe[i] + bin_ft / 2, "y_ft": ye[j] + bin_ft / 2,
+                         "shots_after_miss": int(c0), "shots_after_make": int(c1),
+                         "share_after_miss_pct": 100 * c0 / n0,
+                         "share_after_make_pct": 100 * c1 / n1,
+                         "diff_pp": 100 * (c1 / n1 - c0 / n0)})
+    return rows
+
+
+def shotmap(d: pd.DataFrame, seasons: list[str]) -> pd.DataFrame:
+    """Group maps (D-051), for all seasons together and for each season (D-058)."""
+    rows = []
+    for season in ["All seasons"] + seasons:
+        in_season = pd.Series(True, index=d.index) if season == "All seasons" else d.season.eq(season)
+        for family, label, mask in groups(d):
+            for r in diff_bins(d, mask & in_season, BIN_FT, MIN_BIN_SHOTS):
+                rows.append({"season": season, "family": family, "group": label, **r})
+    return pd.DataFrame(rows)
+
+
+def player_bins(d: pd.DataFrame, eligible: pd.DataFrame) -> pd.DataFrame:
+    """Player maps (D-057): 6 x 6 ft squares with 5+ shots on each side, per eligible player-season."""
+    rows = []
+    for r in eligible.itertuples():
+        mask = (d.player_id == r.player_id) & (d.season == r.season)
+        for b in diff_bins(d, mask, PLAYER_BIN_FT, PLAYER_MIN_BIN_SHOTS):
+            rows.append({"player_id": r.player_id, "season": r.season, **b})
     return pd.DataFrame(rows)
 
 
@@ -134,35 +157,15 @@ def players(d: pd.DataFrame) -> pd.DataFrame:
     return pd.DataFrame(rows).sort_values(["player", "season"]).reset_index(drop=True)
 
 
-def player_zones(d: pd.DataFrame, eligible: pd.DataFrame) -> pd.DataFrame:
-    """Per eligible player-season (D-050) and zone: share of next shots after a make and after a
-    miss, and the difference in percentage points (D-055)."""
-    from hothand.pairs import ZONE_NAMES
-
-    keep = d.merge(eligible[["player_id", "season"]], on=["player_id", "season"])
-    counts = (keep.groupby(["player_id", "season", "prev_made"]).zone.value_counts()
-              .unstack(fill_value=0).reindex(columns=ZONE_NAMES, fill_value=0))
-    rows = []
-    for (pid, season), g in counts.groupby(level=[0, 1]):
-        miss, make = g.xs(0, level=2).iloc[0], g.xs(1, level=2).iloc[0]
-        for z in ZONE_NAMES:
-            rows.append({"player_id": pid, "season": season, "zone": z,
-                         "shots_after_miss": int(miss[z]), "shots_after_make": int(make[z]),
-                         "share_after_miss_pct": 100 * miss[z] / miss.sum(),
-                         "share_after_make_pct": 100 * make[z] / make.sum(),
-                         "diff_pp": 100 * (make[z] / make.sum() - miss[z] / miss.sum())})
-    return pd.DataFrame(rows)
-
-
 def run() -> None:
     cfg = load_config()
     d = core.prepare(pd.read_parquet(FEATURES), cfg, "analysis")
     OUT.mkdir(parents=True, exist_ok=True)
     explorer(d, cfg).to_csv(OUT / "explorer.csv", index=False)
-    shotmap(d).to_csv(OUT / "shotmap.csv", index=False)
+    shotmap(d, cfg["data"]["seasons"]).to_csv(OUT / "shotmap.csv", index=False)
     pl = players(d)
     pl.to_csv(OUT / "players.csv", index=False)
-    player_zones(d, pl).to_csv(OUT / "player_zones.csv", index=False)
+    player_bins(d, pl).to_csv(OUT / "player_bins.csv", index=False)
 
 
 if __name__ == "__main__":

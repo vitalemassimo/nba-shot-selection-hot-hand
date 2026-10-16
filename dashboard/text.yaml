@@ -25,7 +25,7 @@ explorer:
 
 shotmap:
   # New labels (2026-10-16), proposed by Claude at Massimo's request for more descriptive charts
-  hover: "Distance from the basket: {dist}<br>Share of next shots in this square: {make} after a make, {miss} after a miss<br>Difference: {diff} percentage points"
+  hover: "Distance from the basket: {dist}<br>Share of next shots in this square: {make} after a make, {miss} after a miss<br>Difference: {diff} percentage points<br>Shots in this square: {n_make} after a make, {n_miss} after a miss"
   colorbar: "Make − miss (pp)"
   question: "Where on the court does the next shot come from after a make vs a miss?"
   help: |-
@@ -34,7 +34,7 @@ shotmap:
 players:
   # New labels (2026-10-16), proposed by Claude at Massimo's request for more descriptive charts
   map_title: "Where this player's next shot goes after a make vs a miss"
-  map_note: "Each zone shows the change in the share of next shots taken there: after a make minus after a miss, in percentage points, with the number of shots on each side."
+  map_note: "Each 6 × 6 ft square shows the share of this player's next shots taken there after a make minus after a miss, in percentage points. Only squares with at least 5 shots on each side are shown, so parts of the court stay empty and each square rests on few shots."
   compare_title: "Is this player's overall shift unusual for his groups?"
   compare_axis: "Next shot after a make minus after a miss: distance vs own usual shot (ft, 95% interval)"
   this_player: "This player-season (simple difference)"

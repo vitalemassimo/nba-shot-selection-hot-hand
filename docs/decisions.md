@@ -460,3 +460,18 @@ player-season has only ~200-300 shots on each side (median ~30 per zone and side
 **Decision (Massimo).** The chart comparing the player's overall shift with his usage tier, playstyle
 and all players stays, below the zone map, with clearer labels.
 **Status.** Decided by Massimo, 2026-10-16.
+
+### D-057 · 2026-10-16 · Player map uses squares like the group map (Massimo; replaces D-055)
+**Decision (Massimo).** The player map uses the same square design as the group map, with bigger
+squares: 6 x 6 ft, centred on the basket, showing only squares with at least 5 shots on each side.
+**Finding behind the size.** On 120 sampled player-seasons, 4 ft squares with 10+ shots showed a
+median of 2 squares (22% of the player's shots); 6 ft with 5+ showed 8 squares (58%), the most of
+the options compared (4 ft/5+: 5, 38%; 5 ft/5+: 6, 49%; 6 ft/10+: 3, 34%; 8 ft/10+: 4, 50%).
+Squares can rest on 5 shots per side, so the counts are on hover and the noise warning stays.
+**Status.** Decided by Massimo, 2026-10-16.
+
+### D-058 · 2026-10-16 · Season menus on both maps (Massimo)
+**Decision (Massimo).** The group map has a season menu ("All seasons" or one of the 8 seasons; per
+season, squares still need 50+ shots on each side). The player lookup has separate menus for the
+player and the season (only seasons where he has 100+ pairs on each side).
+**Status.** Decided by Massimo, 2026-10-16.
