@@ -13,6 +13,13 @@ the sequence bias are accounted for, a player is not more likely to make his nex
 
 ![H0 shift by group](reports/figures/stage6_forest.png)
 
+![Shot map from the live dashboard](reports/figures/dashboard_shot_map.png)
+
+*Shot map from the [live dashboard](https://nba-shot-selection.streamlit.app/) (all players, all
+seasons). Each 2 × 2 ft square shows the share of next shots there after a make minus the share after a
+miss, in percentage points: red means more often after a make, blue more often after a miss. Dark
+squares had fewer than 50 shots on a side.*
+
 ## Question
 
 After a made or missed shot, how does an NBA player's next shot change in distance, zone and
