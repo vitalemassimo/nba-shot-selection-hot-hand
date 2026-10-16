@@ -1,13 +1,16 @@
 PY := PYTHONPATH=src .venv/bin/python
 
-.PHONY: setup test lint all data verify-data allstars audit features core segments robustness dashboard-data dashboard-check dashboard
+help:  ## list every command
+	@grep -E '^[a-zA-Z_-]+:.*## ' Makefile | awk 'BEGIN {FS = ":.*## "}; {printf "  %-16s %s\n", $$1, $$2}'
+
+.PHONY: help setup test lint all data verify-data allstars audit features core segments robustness dashboard-data dashboard-check dashboard
 setup:  ## create the environment from the lock file
 	python3 -m venv .venv
 	$(PY) -m pip install -r requirements-lock.txt
 	$(PY) -m pip install -e .
 test:   ## run unit tests
 	$(PY) -m pytest -q
-lint:
+lint:   ## run the linter (ruff)
 	$(PY) -m ruff check src tests run_all.py
 all:    ## regenerate every result from raw data
 	$(PY) run_all.py

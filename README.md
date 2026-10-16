@@ -1,5 +1,10 @@
 # NBA Shot Selection and the Hot Hand
 
+[![Live dashboard](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://nba-shot-selection.streamlit.app/)
+[![CI](https://github.com/vitalemassimo/nba-shot-selection-hot-hand/actions/workflows/ci.yml/badge.svg)](https://github.com/vitalemassimo/nba-shot-selection-hot-hand/actions/workflows/ci.yml)
+![Python 3.13](https://img.shields.io/badge/python-3.13-blue)
+[![License: MIT](https://img.shields.io/badge/license-MIT-green)](LICENSE)
+
 After a make, NBA players take their next shot on average 1.5 ft (46 cm) farther from the basket
 than after a miss (95% interval 1.4 to 1.6 ft). The data shows no hot hand: once shot difficulty and
 the sequence bias are accounted for, a player is not more likely to make his next shot after a make.
@@ -91,7 +96,7 @@ NBA.com refuses many cloud IP addresses.
 git clone https://github.com/vitalemassimo/nba-shot-selection-hot-hand.git
 cd nba-shot-selection-hot-hand
 make setup   # create .venv from the pinned lock file (~1 min)
-make test    # 38 unit tests (~1 min)
+make test    # 38 unit tests (~1 min); `make help` lists every command
 make all     # download raw data, then run Stages 2-8 (~75 min on a laptop)
 make dashboard-check   # every number the dashboard shows matches the results tables
 make dashboard         # open the dashboard locally
