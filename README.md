@@ -18,7 +18,7 @@ specification curve: [reports/figures/stage7_specification_curve.png](reports/fi
 
 ## Reproduce it
 
-Requires Python 3.10+ (developed on 3.13, macOS) and about 3 GB of disk. Run from your own computer:
+Requires Python 3.10+ (developed on 3.13, macOS) and about 2.5 GB of disk (1.4 GB data, 1 GB environment). Run from your own computer:
 NBA.com refuses many cloud IP addresses.
 
 ```bash
