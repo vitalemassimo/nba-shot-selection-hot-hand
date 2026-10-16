@@ -1,13 +1,68 @@
 # NBA Shot Selection and the Hot Hand
 
-> Work in progress. The headline finding goes here once results are final.
+After a make, NBA players take their next shot on average 1.5 ft (46 cm) farther from the basket
+than after a miss (95% interval 1.4 to 1.6 ft). The data shows no hot hand: once shot difficulty and
+the sequence bias are accounted for, a player is not more likely to make his next shot after a make.
 
-**Question.** After a made or missed shot, how does an NBA player's next shot change in distance,
-zone and difficulty compared with that same player's own baseline, and does that change differ by
-experience, role, playstyle and season type?
+Dashboard: run it locally with `make dashboard` (public link coming soon).
 
-Predictions were committed before any data was collected: see [docs/hypotheses.md](docs/hypotheses.md).
-Every analytical choice is logged in [docs/decisions.md](docs/decisions.md).
+![H0 shift by group](reports/figures/stage6_forest.png)
+
+## Question
+
+After a made or missed shot, how does an NBA player's next shot change in distance, zone and
+difficulty compared with that same player's own baseline, and does that change differ by
+experience, role, playstyle and season type? Each shot is a decision made under pressure right
+after a success or a failure, so the next shot shows how players update and react after receiving
+good or bad feedback on their performance.
+
+## Key results
+
+95% intervals in brackets; pp = percentage points.
+
+**Headline:** after a make, the next shot is 1.5 ft farther out than after a miss (1.4 to 1.6 ft),
+with 5.4 pp more threes and 5.2 pp fewer rim attempts.
+
+- **H0, partly right:** after a miss the next shot is 0.9 ft closer (+3.2 pp at the rim). After a
+  make it is 0.6 ft farther (+2.4 pp threes), so players move out after a make instead of staying put.
+- **H1, wrong (no difference):** rookies shift 1.56 ft and veterans 1.55 ft. The gap is +0.07 ft
+  (-0.28 to +0.41), Holm p = 0.95.
+- **H2, wrong (opposite direction):** high usage shifts 1.66 ft and low usage 1.15 ft. The gap is
+  -0.47 ft (-0.73 to -0.21), Holm p = 0.001. Explanation to test later: high-usage players are the
+  first option, so they get the freedom to take harder, farther shots after a make.
+- **H3, partly right:** the shifts differ across playstyles (Holm p = 0.0001). Three-point shooters
+  shift the most (1.83 ft, with above-the-break threes -4.4 pp after a miss and +4.2 pp after a make)
+  and rim bigs the least (0.81 ft). All four groups take +2.1 to +3.8 pp more rim attempts after a
+  miss. Explanation to test later: three-point shooters have the widest range to move across, from
+  the rim to the arc.
+- **H4, not confirmed (not distinguishable from no difference):** the same players shift 1.33 ft in
+  the playoffs and 1.49 ft in the regular season. The gap is -0.08 ft (-0.29 to +0.13), Holm p = 0.95.
+- **Hot hand:** once the sequence bias is corrected, the chance of making the next shot after a make
+  changes by -0.4 pp (shuffle within game, p = 0.002) or +0.1 pp (shuffle within quarter, p = 0.46):
+  no hot hand.
+
+Full results: [docs/hypotheses.md](docs/hypotheses.md#results) · interactive: `make dashboard`
+
+## Data
+
+Eight NBA seasons (2018-19 to 2025-26), regular season and playoffs: 1,804,934 field-goal attempts,
+of which 8 were dropped because the two sources named different shooters. They form 1,071,022 pairs
+of consecutive shots; games were split at random into two halves, and every test uses the 535,659
+pairs of the analysis half. Shots and play-by-play data come from NBA.com, via the nba_api package and the shufinskiy/nba_data bulk dataset. All-Star rosters come from Wikipedia. Raw data is not redistributed. This project is not affiliated with or endorsed by the NBA.
+
+## Method
+
+The data cover 8 seasons (2018-19 to 2025-26), regular season and playoffs, about 1.8 million shots. A pair is two consecutive shots by the same player in the same game, at most 4 minutes of game clock apart. Putbacks, tips, heaves and backcourt shots are left out. Each next shot is compared with that player’s own usual shot. Games were split at random into two halves: one half built the difficulty model and the playstyles, and the other ran every test. The model controls for where the previous shot was taken and how hard it was, the game situation and the player-season. The results were checked with a second model and a shuffle test.
+
+In short sequences of shots, simply comparing shots after a make with shots after a miss gives a biased answer (Miller and Sanjurjo, 2018). To correct for this, the order of each player’s shots within a game was shuffled 1,000 times, and the real result was compared with the shuffled ones.
+
+Every analytical choice is logged with its reason in [docs/decisions.md](docs/decisions.md).
+
+## Pre-registered predictions vs results
+
+The predictions for H0 to H4 were committed on 2026-10-14 (commit `0e843c9`), before any data was
+downloaded. Each prediction and its result, including the ones that missed:
+[docs/hypotheses.md](docs/hypotheses.md).
 
 ## Robustness
 
@@ -15,6 +70,15 @@ Before the checks were run, the result was defined as robust if it stayed positi
 
 Full table: [data/processed/results_robustness.csv](data/processed/results_robustness.csv) ·
 specification curve: [reports/figures/stage7_specification_curve.png](reports/figures/stage7_specification_curve.png)
+
+## Limitations
+
+* There is no defender data, so shot difficulty means location only.
+* Free throws do not appear in the shot sequence.
+* The study is observational, so it cannot show that a miss causes the shift.
+* The size of the shift depends on how close in time two shots must be: about 2.0 ft within 60 seconds and 1.2 ft with no limit.
+* The placebo test was small but not zero (+0.07 ft), so some leftover confounding is possible.
+* The data cover one league and 8 seasons.
 
 ## Reproduce it
 
@@ -51,11 +115,6 @@ dashboard/         Streamlit app, its wording (text.yaml) and the displayed-vs-C
 reports/figures/   charts used in the README and the dashboard
 ```
 
-## Data
-
-Shot data from NBA.com (via nba_api) and the shufinskiy/nba_data bulk dataset. Raw data is not
-redistributed in this repository. Not affiliated with or endorsed by the NBA.
-
 ## References
 
 - Gilovich, T., Vallone, R., and Tversky, A. (1985). The hot hand in basketball: On the misperception
@@ -64,6 +123,13 @@ redistributed in this repository. Not affiliated with or endorsed by the NBA.
   small numbers. *Econometrica*, 86(6), 2019-2047.
 - Bocskocsky, A., Ezekowitz, J., and Stein, C. (2014). The hot hand: A new approach to an old
   "fallacy". MIT Sloan Sports Analytics Conference.
+
+## Author
+
+**Massimo Vitale** · Data and Business Analytics at IE University, focused on applied AI and data
+science, with a particular interest in healthcare and sports ·
+[LinkedIn](https://www.linkedin.com/in/massimo-vitale-8aa09233b/) ·
+[GitHub](https://github.com/vitalemassimo)
 
 ## License
 
