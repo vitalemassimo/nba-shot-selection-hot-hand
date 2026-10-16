@@ -47,6 +47,9 @@ Read this file at the start of every session, together with `docs/decisions.md`,
 - 2026-10-15, Massimo: Stage 7 code is delegated to Claude Code (variation loop, specification curve,
   placebo tests). Massimo writes the survival rule before anything runs, decides what counts as
   fragile and declares the gate.
+- 2026-10-16, Massimo: Stage 8 code is delegated to Claude Code (Streamlit app, pre-aggregated data,
+  displayed-vs-CSV check). Massimo decides what question each chart answers and writes all the
+  wording, including the limitations, and declares the gate.
 
 ## Always Massimo's (never delegated)
 
@@ -68,7 +71,7 @@ Fill this in as you go. One row per stage once you have personally checked the "
 | 4 | 2026-10-15 | Decided every Stage 4 definition (D-024 to D-035); checked the pair attrition, split balance, xFG model comparison and calibration plot, cluster stability and profiles, and segment cell sizes; hand-checked 5 real player-games against the raw play-by-play (J. Freeman-Liberty, M. Potter, T. Eason, C. Payne, J. Grant), including putbacks, a heave, gaps over 240 s and pairs across quarter breaks; confirmed the xFG model excludes every shot result (enforced in code and tests); tagged definitions-v1 | Putbacks and tips count in the streak (D-029); rookie season = first season played (D-030); split drawn within each season and season type (D-025) | Playoff rookies (865 analysis pairs) fall below the 2,000-pair minimum for H1 |
 | 5 | 2026-10-15 | Decided the Stage 5 specifications before any analysis-half estimate (D-036 to D-040); checked the single analysis-half run: Model 3 (1.50 ft) and the mixed-effects model (1.49 ft) agree in sign and size; reproduced Model 0 by hand (0.58 - (-0.88) = 1.46 ft); stated the result in feet and percentage points with intervals in the H0 result | Wrote the H0 result in docs/hypotheses.md | Second-chance shots in the same possession as a possible mechanical source of the shift (Stage 7); report make probability from the permutation test, not the fixed-effects regression |
 | 6 | 2026-10-15 | Decided the Stage 6 comparison rules before the run (D-041 to D-044); checked that the minimum-cell rule was applied to every group (all cells met it in the pooled analysis); checked that the joint rookie/usage/cluster model is labelled secondary and not a finding; compared every result with my written predictions and filled the Result column for H1-H4, including the misses (H1, H2, the first half of H3) | Wrote the H1-H4 results in docs/hypotheses.md | Whether usage or playstyle drives the larger shift (they overlap); my explanations for H2 and H3 are to be tested |
-| 7 | | | | |
+| 7 | 2026-10-15 | Wrote the survival rule and the counting rules before any variation ran (D-045 to D-048); checked the automated result (positive in 24 of 24 counted variations, interval contains 1.50 ft in 20 of 24); checked that the placebo makes sense (+0.07 ft, small but not zero) and that the second-chance check removes almost none of the shift; reported the fragility plainly in the README | Wrote the README robustness paragraph; verdict: robust in direction, size depends on the consecutive-shot definition | Small leftover confounding suggested by the placebo; H2 does not hold in 2025-26 alone; specification-curve labels to fix in Stage 9 |
 | 8 | | | | |
 | 9 | | | | |
 | 10 | | | | |
