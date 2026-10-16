@@ -475,3 +475,5 @@ Squares can rest on 5 shots per side, so the counts are on hover and the noise w
 season, squares still need 50+ shots on each side). The player lookup has separate menus for the
 player and the season (only seasons where he has 100+ pairs on each side).
 **Status.** Decided by Massimo, 2026-10-16.
+**Rerun 2026-10-16 (cosmetic, Stage 7).** Specification-curve labels were clipped; figure export fixed
+(`bbox_inches="tight"`), notebook rerun, `results_robustness.csv` verified byte-identical.
