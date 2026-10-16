@@ -24,7 +24,7 @@ explorer:
     Pick a group and an outcome: shot distance, or the share of rim, paint, mid-range, corner-three, above-the-break-three or all three-point attempts. The two bars show the next shot after a miss and after a make, each measured against the player’s own usual shot. The big number is the shift, with its 95% interval and the number of pairs and players behind it.
 
 shotmap:
-  # New labels (2026-10-16), proposed by Claude at Massimo's request for more descriptive charts
+  # Labels added 2026-10-16 for more descriptive charts; approved by Massimo
   hover: "Distance from the basket: {dist}<br>Share of next shots in this square: {make} after a make, {miss} after a miss<br>Difference: {diff} percentage points<br>Shots in this square: {n_make} after a make, {n_miss} after a miss"
   colorbar: "Make − miss (pp)"
   question: "Where on the court does the next shot come from after a make vs a miss?"
@@ -32,7 +32,7 @@ shotmap:
     Each square is 2 × 2 ft. The colour shows the share of next shots in that square after a make minus the share after a miss, in percentage points: red means more often after a make, blue more often after a miss. Only squares with 50 or more shots on each side are shown. For all players together, red appears just beyond the arc and blue at the rim.
 
 players:
-  # New labels (2026-10-16), proposed by Claude at Massimo's request for more descriptive charts
+  # Labels added 2026-10-16 for more descriptive charts; approved by Massimo
   map_title: "Where this player's next shot goes after a make vs a miss"
   map_note: "Each 6 × 6 ft square shows the share of this player's next shots taken there after a make minus after a miss, in percentage points. Only squares with at least 5 shots on each side are shown, so parts of the court stay empty and each square rests on few shots."
   compare_title: "Is this player's overall shift unusual for his groups?"
