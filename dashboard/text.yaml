@@ -53,8 +53,8 @@ method:
     In short, the result is robust in direction, but its size depends on how consecutive shots are
     defined.
   limitations: |-
-    There is no defender data, so shot difficulty means location only. Free throws do not appear in the shot sequence.
-
+    * There is no defender data, so shot difficulty means location only.
+    * Free throws do not appear in the shot sequence.
     * The study is observational, so it cannot show that a miss causes the shift.
     * The size of the shift depends on how close in time two shots must be: about 2.0 ft within 60 seconds and 1.2 ft with no limit.
     * The placebo test was small but not zero (+0.07 ft), so some leftover confounding is possible.

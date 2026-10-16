@@ -242,7 +242,8 @@ def main() -> None:
         for key, title in [("summary", "Method"), ("streak_bias", "The streak bias"),
                            ("robustness", "Robustness"), ("limitations", "Limitations"),
                            ("data_credit", "Data")]:
-            st.markdown(f"**{title}.** {m[key]}")
+            sep = "\n\n" if m[key].lstrip().startswith("*") else " "  # a list needs its own line
+            st.markdown(f"**{title}.**{sep}{m[key]}")
 
     with tabs[5]:
         st.write(TEXT["downloads"]["intro"])
