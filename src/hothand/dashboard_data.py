@@ -5,6 +5,7 @@ and never computes a result itself). Analysis half only. Output: data/processed/
                 after-make and after-miss means vs the player's baseline (display, D-041 design)
   shotmap.csv   share of next shots per court bin after a make minus after a miss, per group (D-051)
   players.csv   player-seasons with 100+ pairs after a make and 100+ after a miss (D-050)
+  player_zones.csv  zone shares after a make and after a miss for those player-seasons (D-055)
 """
 
 import numpy as np
@@ -104,6 +105,8 @@ def shotmap(d: pd.DataFrame) -> pd.DataFrame:
                 rows.append({"family": family, "group": label, "x_ft": xe[i] + BIN_FT / 2,
                              "y_ft": ye[j] + BIN_FT / 2, "shots_after_miss": int(c0),
                              "shots_after_make": int(c1),
+                             "share_after_miss_pct": 100 * c0 / n0,
+                             "share_after_make_pct": 100 * c1 / n1,
                              "diff_pp": 100 * (c1 / n1 - c0 / n0)})
     return pd.DataFrame(rows)
 
@@ -131,13 +134,35 @@ def players(d: pd.DataFrame) -> pd.DataFrame:
     return pd.DataFrame(rows).sort_values(["player", "season"]).reset_index(drop=True)
 
 
+def player_zones(d: pd.DataFrame, eligible: pd.DataFrame) -> pd.DataFrame:
+    """Per eligible player-season (D-050) and zone: share of next shots after a make and after a
+    miss, and the difference in percentage points (D-055)."""
+    from hothand.pairs import ZONE_NAMES
+
+    keep = d.merge(eligible[["player_id", "season"]], on=["player_id", "season"])
+    counts = (keep.groupby(["player_id", "season", "prev_made"]).zone.value_counts()
+              .unstack(fill_value=0).reindex(columns=ZONE_NAMES, fill_value=0))
+    rows = []
+    for (pid, season), g in counts.groupby(level=[0, 1]):
+        miss, make = g.xs(0, level=2).iloc[0], g.xs(1, level=2).iloc[0]
+        for z in ZONE_NAMES:
+            rows.append({"player_id": pid, "season": season, "zone": z,
+                         "shots_after_miss": int(miss[z]), "shots_after_make": int(make[z]),
+                         "share_after_miss_pct": 100 * miss[z] / miss.sum(),
+                         "share_after_make_pct": 100 * make[z] / make.sum(),
+                         "diff_pp": 100 * (make[z] / make.sum() - miss[z] / miss.sum())})
+    return pd.DataFrame(rows)
+
+
 def run() -> None:
     cfg = load_config()
     d = core.prepare(pd.read_parquet(FEATURES), cfg, "analysis")
     OUT.mkdir(parents=True, exist_ok=True)
     explorer(d, cfg).to_csv(OUT / "explorer.csv", index=False)
     shotmap(d).to_csv(OUT / "shotmap.csv", index=False)
-    players(d).to_csv(OUT / "players.csv", index=False)
+    pl = players(d)
+    pl.to_csv(OUT / "players.csv", index=False)
+    player_zones(d, pl).to_csv(OUT / "player_zones.csv", index=False)
 
 
 if __name__ == "__main__":

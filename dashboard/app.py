@@ -27,6 +27,7 @@ def load():
         "explorer": pd.read_csv(DASH / "explorer.csv"),
         "shotmap": pd.read_csv(DASH / "shotmap.csv"),
         "players": pd.read_csv(DASH / "players.csv"),
+        "player_zones": pd.read_csv(DASH / "player_zones.csv"),
     }
 
 
@@ -85,20 +86,87 @@ def court(fig: go.Figure, k: float = 1.0) -> None:
 def shot_map(sm: pd.DataFrame, group: str, unit: str = "ft") -> go.Figure:
     k = 1.0 if unit == "ft" else FT_TO_M
     g = sm[sm.group == group]
-    grid = g.pivot_table(index="y_ft", columns="x_ft", values="diff_pp")
-    grid.index, grid.columns = grid.index * k, grid.columns * k
+    g = g.assign(dist=np.hypot(g.x_ft, g.y_ft) * k)
+    piv = {c: g.pivot_table(index="y_ft", columns="x_ft", values=c)
+           for c in ["diff_pp", "dist", "share_after_make_pct", "share_after_miss_pct"]}
+    grid = piv["diff_pp"]
+    custom = np.dstack([piv[c].reindex_like(grid).to_numpy()
+                        for c in ["dist", "share_after_make_pct", "share_after_miss_pct"]])
     lim = float(np.nanmax(np.abs(grid.to_numpy()))) if len(g) else 1
+    hover = TEXT["shotmap"]["hover"].format(
+        dist=f"%{{customdata[0]:.1f}} {unit}", make="%{customdata[1]:.2f}%",
+        miss="%{customdata[2]:.2f}%", diff="%{z:+.2f}")
     fig = go.Figure(go.Heatmap(
-        x=grid.columns, y=grid.index, z=grid.to_numpy(), zmin=-lim, zmax=lim, zmid=0,
-        colorscale="RdBu_r", colorbar=dict(title="pp"),
-        hovertemplate=f"x %{{x:.1f}} {unit}, y %{{y:.1f}} {unit} from the basket"
-                      "<br>%{z:+.2f} pp<extra></extra>"))
+        x=grid.columns * k, y=grid.index * k, z=grid.to_numpy(), customdata=custom,
+        zmin=-lim, zmax=lim, zmid=0, colorscale="RdBu_r",
+        colorbar=dict(title=dict(text=TEXT["shotmap"]["colorbar"], side="right")),
+        hovertemplate=hover + "<extra></extra>"))
     court(fig, k)
     fig.update_layout(height=480, margin=dict(l=10, r=10, t=10, b=10),
                       xaxis=dict(range=[-25 * k, 25 * k], showgrid=False, zeroline=False,
                                  visible=False),
                       yaxis=dict(range=[-5.5 * k, 33 * k], showgrid=False, zeroline=False,
                                  visible=False, scaleanchor="x"))
+    return fig
+
+
+ZONE_LABELS = {"restricted_area": "Rim", "paint": "Paint", "mid_range": "Mid-range",
+               "corner_three": "Corner three", "above_break_three": "Above-the-break three"}
+
+
+def zone_polygons(k: float) -> dict[str, list[tuple[np.ndarray, np.ndarray]]]:
+    """Court areas of the five zones in display units, drawn back to front (later ones on top)."""
+    base, top = -5.25, 33.0
+    cy = 23.75 * np.sin(np.arccos(22 / 23.75))
+    t = np.linspace(np.arccos(22 / 23.75), np.pi - np.arccos(22 / 23.75), 80)
+    ax, ay = 23.75 * np.cos(t), 23.75 * np.sin(t)
+    inside = (np.r_[22, ax, -22], np.r_[base, ay, base])  # inside the three-point line
+    above = (np.r_[-25, -22, ax[::-1], 22, 25, 25, -25], np.r_[cy, cy, ay[::-1], cy, cy, top, top])
+    corners = [(np.array([-25, -22, -22, -25]), np.array([base, base, cy, cy])),
+               (np.array([22, 25, 25, 22]), np.array([base, base, cy, cy]))]
+    paint = (np.array([-8, 8, 8, -8]), np.array([base, base, 13.75, 13.75]))
+    h = np.linspace(0, np.pi, 40)
+    ra = (np.r_[4, 4 * np.cos(h), -4], np.r_[base, 4 * np.sin(h), base])
+    polys = {"above_break_three": [above], "corner_three": corners, "mid_range": [inside],
+             "paint": [paint], "restricted_area": [ra]}
+    return {z: [(x * k, y * k) for x, y in p] for z, p in polys.items()}
+
+
+ZONE_LABEL_POS = {"restricted_area": (0, 0.5), "paint": (0, 9), "mid_range": (-14, 16),
+                  "corner_three": (-23.5, 2), "above_break_three": (0, 28.5)}
+
+
+def player_zone_map(z: pd.DataFrame, unit: str) -> go.Figure:
+    from plotly.colors import sample_colorscale
+
+    k = 1.0 if unit == "ft" else FT_TO_M
+    lim = max(float(z.diff_pp.abs().max()), 1.0)
+    fig = go.Figure()
+    for zone, polys in zone_polygons(k).items():
+        r = z.set_index("zone").loc[zone]
+        colour = sample_colorscale("RdBu_r", (r.diff_pp + lim) / (2 * lim))[0]
+        name = (f"{ZONE_LABELS[zone]}: {r.diff_pp:+.1f} pp<br>"
+                f"{r.share_after_make_pct:.1f}% of next shots after a make "
+                f"({int(r.shots_after_make)} shots), {r.share_after_miss_pct:.1f}% after a miss "
+                f"({int(r.shots_after_miss)} shots)")
+        for x, y in polys:
+            fig.add_trace(go.Scatter(x=x, y=y, fill="toself", fillcolor=colour, mode="lines",
+                                     line=dict(color="#666", width=1), name=name,
+                                     hoveron="fills", hoverinfo="name", showlegend=False))
+        lx, ly = ZONE_LABEL_POS[zone]
+        corner = zone == "corner_three"  # the corner strip is narrow: label it with an arrow
+        fig.add_annotation(x=lx * k, y=ly * k, showarrow=corner, ax=70 if corner else 0,
+                           ay=-25 if corner else 0, arrowcolor="#333",
+                           font=dict(size=11, color="#111"), bgcolor="rgba(255,255,255,0.85)",
+                           borderpad=3,
+                           text=f"{ZONE_LABELS[zone]}<br><b>{r.diff_pp:+.1f} pp</b><br>"
+                                f"{int(r.shots_after_make)} / {int(r.shots_after_miss)} shots")
+    fig.add_trace(go.Scatter(x=[None], y=[None], mode="markers", showlegend=False,
+                             marker=dict(colorscale="RdBu_r", cmin=-lim, cmax=lim, color=[0],
+                                         colorbar=dict(title=dict(text=TEXT["shotmap"]["colorbar"], side="right")))))
+    fig.update_layout(height=480, margin=dict(l=10, r=10, t=10, b=10),
+                      xaxis=dict(range=[-25 * k, 25 * k], visible=False),
+                      yaxis=dict(range=[-5.5 * k, 33 * k], visible=False, scaleanchor="x"))
     return fig
 
 
@@ -190,23 +258,33 @@ def main() -> None:
         cl = {"rim_bigs": "Rim bigs", "rim_and_corner": "Rim and corner",
               "mid_range_scorers": "Mid-range scorers",
               "three_point_shooters": "Three-point shooters"}.get(r.cluster)
-        comp = [("This player-season", r.shift_ft, r.ci_low, r.ci_high)]
+        st.markdown(f"**{TEXT['players']['map_title']}**")
+        st.caption(TEXT["players"]["map_note"] + " Shots shown as: after a make / after a miss.")
+        punit = st.radio("Units", ["ft", "m"], horizontal=True, key="player_units")  # D-054
+        pz = data["player_zones"]
+        pz = pz[(pz.player_id == r.player_id) & (pz.season == r.season)]
+        st.plotly_chart(player_zone_map(pz, punit), width="stretch")
+
+        st.markdown(f"**{TEXT['players']['compare_title']}**")
+        comp = [(TEXT["players"]["this_player"], r.shift_ft, r.ci_low, r.ci_high)]
         for g in [tier, cl, "All players"]:
             if g:
                 e = ex[(ex.group == g) & (ex.outcome == "distance_vs_baseline_ft")].iloc[0]
-                comp.append((g, e.estimate, e.ci_low, e.ci_high))
+                comp.append((f"{g} {TEXT['players']['group_suffix']}", e.estimate, e.ci_low,
+                             e.ci_high))
         c = pd.DataFrame(comp, columns=["who", "est", "lo", "hi"]).iloc[::-1]
         fig = go.Figure(go.Scatter(
             x=c.est, y=c.who, mode="markers", marker=dict(color=MAKE, size=9),
             error_x=dict(type="data", symmetric=False, array=c.hi - c.est,
-                         arrayminus=c.est - c.lo, color=MAKE)))
+                         arrayminus=c.est - c.lo, color=MAKE),
+            hovertemplate="%{y}: %{x:+.2f} ft<extra></extra>"))
         fig.add_vline(x=0, line_color="#999")
-        fig.update_layout(height=260, margin=dict(l=10, r=10, t=10, b=40),
-                          xaxis_title="Shift in next-shot distance (ft, 95% CI)")
+        fig.update_layout(height=280, margin=dict(l=10, r=10, t=10, b=50),
+                          xaxis_title=TEXT["players"]["compare_axis"])
         st.plotly_chart(fig, width="stretch")
         st.caption("Player-seasons with at least 100 pairs after a make and 100 after a miss. "
                    "Player estimate: simple difference without controls; group estimates: Model 3.")
-        source("dashboard/players.csv", "dashboard/explorer.csv")
+        source("dashboard/players.csv", "dashboard/player_zones.csv", "dashboard/explorer.csv")
 
     with tabs[4]:
         m = TEXT["method"]

@@ -448,3 +448,15 @@ that could read as a negative streak effect.
 labels convert (1 ft = 0.3048 m); the colours are percentage points and do not change. Feet stay the
 default, consistent with D-005.
 **Status.** Decided by Massimo, 2026-10-16.
+
+### D-055 · 2026-10-16 · Player lookup gets a zone map (Massimo)
+**Decision (Massimo).** The player lookup shows a court map of the five shot zones for the chosen
+player-season, each coloured by the share of next shots in that zone after a make minus after a
+miss (percentage points), with the shot counts on each side. Zones rather than squares, because a
+player-season has only ~200-300 shots on each side (median ~30 per zone and side).
+**Status.** Decided by Massimo, 2026-10-16.
+
+### D-056 · 2026-10-16 · Player comparison chart stays under the map (Massimo)
+**Decision (Massimo).** The chart comparing the player's overall shift with his usage tier, playstyle
+and all players stays, below the zone map, with clearer labels.
+**Status.** Decided by Massimo, 2026-10-16.

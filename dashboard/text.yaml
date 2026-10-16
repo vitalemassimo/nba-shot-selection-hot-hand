@@ -24,11 +24,21 @@ explorer:
     Pick a group and an outcome: shot distance, or the share of rim, paint, mid-range, corner-three, above-the-break-three or all three-point attempts. The two bars show the next shot after a miss and after a make, each measured against the player’s own usual shot. The big number is the shift, with its 95% interval and the number of pairs and players behind it.
 
 shotmap:
+  # New labels (2026-10-16), proposed by Claude at Massimo's request for more descriptive charts
+  hover: "Distance from the basket: {dist}<br>Share of next shots in this square: {make} after a make, {miss} after a miss<br>Difference: {diff} percentage points"
+  colorbar: "Make − miss (pp)"
   question: "Where on the court does the next shot come from after a make vs a miss?"
   help: |-
     Each square is 2 × 2 ft. The colour shows the share of next shots in that square after a make minus the share after a miss, in percentage points: red means more often after a make, blue more often after a miss. Only squares with 50 or more shots on each side are shown. For all players together, red appears just beyond the arc and blue at the rim.
 
 players:
+  # New labels (2026-10-16), proposed by Claude at Massimo's request for more descriptive charts
+  map_title: "Where this player's next shot goes after a make vs a miss"
+  map_note: "Each zone shows the change in the share of next shots taken there: after a make minus after a miss, in percentage points, with the number of shots on each side."
+  compare_title: "Is this player's overall shift unusual for his groups?"
+  compare_axis: "Next shot after a make minus after a miss: distance vs own usual shot (ft, 95% interval)"
+  this_player: "This player-season (simple difference)"
+  group_suffix: "(group, full model)"
   question: "How does one player's shift compare with his group's?"
   warning: |-
     Individual estimates rest on a few hundred shots, so their intervals are wide. Only 844 player-seasons qualify (at least 100 pairs after a make and 100 after a miss). A player’s number is a simple difference with no controls, while the group numbers come from the full model. The list is alphabetical on purpose: it is not a ranking and does not show who is “hottest”.
