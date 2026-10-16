@@ -1,5 +1,4 @@
 # Every word a visitor reads on the dashboard. Written by Massimo (docs/ownership.md, Stage 8).
-# Lines marked [TO WRITE: Massimo] or [proposed] are waiting for his wording or approval.
 
 title: "NBA shot selection after makes and misses"
 
@@ -50,9 +49,9 @@ method:
     * The size of the shift depends on how close in time two shots must be: about 2.0 ft within 60 seconds and 1.2 ft with no limit.
     * The placebo test was small but not zero (+0.07 ft), so some leftover confounding is possible.
     * The data cover one league and 8 seasons.
-  data_credit: >-
-    [TO WRITE: Massimo] data credit: NBA.com via nba_api and the shufinskiy/nba_data bulk dataset;
-    not affiliated with or endorsed by the NBA
+  data_credit: |-
+    Shots and play-by-play data come from NBA.com, via the nba_api package and the shufinskiy/nba_data bulk dataset. All-Star rosters come from Wikipedia. Raw data is not redistributed. This project is not affiliated with or endorsed by the NBA.
 
 downloads:
-  intro: "[TO WRITE: Massimo] one line inviting readers to check the numbers"
+  intro: |-
+    Six CSV files: the core, segment and robustness results, plus the three tables behind the Explorer, the shot map and the player lookup. Every number on the dashboard comes from one of these files.

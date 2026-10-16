@@ -59,38 +59,46 @@ def forest(ex: pd.DataFrame) -> go.Figure:
     return fig
 
 
-def court(fig: go.Figure) -> None:
-    """Half-court lines in feet, basket at (0, 0), baseline at y = -5.25."""
+FT_TO_M = 0.3048
+
+
+def court(fig: go.Figure, k: float = 1.0) -> None:
+    """Half-court lines, basket at (0, 0), baseline at y = -5.25 ft; k scales feet to the display
+    unit (1 = feet, FT_TO_M = metres)."""
     line = dict(color="#666", width=1)
-    base = -5.25
+    base = -5.25 * k
     t = np.linspace(np.arccos(22 / 23.75), np.pi - np.arccos(22 / 23.75), 100)
-    fig.add_trace(go.Scatter(x=23.75 * np.cos(t), y=23.75 * np.sin(t), mode="lines", line=line,
-                             hoverinfo="skip", showlegend=False))
-    corner_y = 23.75 * np.sin(np.arccos(22 / 23.75))
-    for x in (-22, 22):
+    fig.add_trace(go.Scatter(x=23.75 * k * np.cos(t), y=23.75 * k * np.sin(t), mode="lines",
+                             line=line, hoverinfo="skip", showlegend=False))
+    corner_y = 23.75 * k * np.sin(np.arccos(22 / 23.75))
+    for x in (-22 * k, 22 * k):
         fig.add_shape(type="line", x0=x, y0=base, x1=x, y1=corner_y, line=line)
-    fig.add_shape(type="rect", x0=-8, y0=base, x1=8, y1=base + 19, line=line)
-    fig.add_shape(type="circle", x0=-0.75, y0=-0.75, x1=0.75, y1=0.75, line=line)
-    fig.add_shape(type="line", x0=-3, y0=-1.25, x1=3, y1=-1.25, line=line)
+    fig.add_shape(type="rect", x0=-8 * k, y0=base, x1=8 * k, y1=base + 19 * k, line=line)
+    fig.add_shape(type="circle", x0=-0.75 * k, y0=-0.75 * k, x1=0.75 * k, y1=0.75 * k, line=line)
+    fig.add_shape(type="line", x0=-3 * k, y0=-1.25 * k, x1=3 * k, y1=-1.25 * k, line=line)
     t = np.linspace(0, np.pi, 50)
-    fig.add_trace(go.Scatter(x=4 * np.cos(t), y=4 * np.sin(t), mode="lines", line=line,
+    fig.add_trace(go.Scatter(x=4 * k * np.cos(t), y=4 * k * np.sin(t), mode="lines", line=line,
                              hoverinfo="skip", showlegend=False))
-    fig.add_shape(type="line", x0=-25, y0=base, x1=25, y1=base, line=line)
+    fig.add_shape(type="line", x0=-25 * k, y0=base, x1=25 * k, y1=base, line=line)
 
 
-def shot_map(sm: pd.DataFrame, group: str) -> go.Figure:
+def shot_map(sm: pd.DataFrame, group: str, unit: str = "ft") -> go.Figure:
+    k = 1.0 if unit == "ft" else FT_TO_M
     g = sm[sm.group == group]
     grid = g.pivot_table(index="y_ft", columns="x_ft", values="diff_pp")
+    grid.index, grid.columns = grid.index * k, grid.columns * k
     lim = float(np.nanmax(np.abs(grid.to_numpy()))) if len(g) else 1
     fig = go.Figure(go.Heatmap(
         x=grid.columns, y=grid.index, z=grid.to_numpy(), zmin=-lim, zmax=lim, zmid=0,
         colorscale="RdBu_r", colorbar=dict(title="pp"),
-        hovertemplate="x %{x} ft, y %{y} ft<br>%{z:+.2f} pp<extra></extra>"))
-    court(fig)
+        hovertemplate=f"x %{{x:.1f}} {unit}, y %{{y:.1f}} {unit} from the basket"
+                      "<br>%{z:+.2f} pp<extra></extra>"))
+    court(fig, k)
     fig.update_layout(height=480, margin=dict(l=10, r=10, t=10, b=10),
-                      xaxis=dict(range=[-25, 25], showgrid=False, zeroline=False, visible=False),
-                      yaxis=dict(range=[-5.5, 33], showgrid=False, zeroline=False, visible=False,
-                                 scaleanchor="x"))
+                      xaxis=dict(range=[-25 * k, 25 * k], showgrid=False, zeroline=False,
+                                 visible=False),
+                      yaxis=dict(range=[-5.5 * k, 33 * k], showgrid=False, zeroline=False,
+                                 visible=False, scaleanchor="x"))
     return fig
 
 
@@ -159,7 +167,10 @@ def main() -> None:
         st.subheader(TEXT["shotmap"]["question"])
         st.caption(TEXT["shotmap"]["help"])
         group = st.selectbox("Group", sm.group.unique(), key="shotmap_group")
-        st.plotly_chart(shot_map(sm, group), width="stretch")
+        unit = st.radio("Units", ["ft", "m"], horizontal=True, key="shotmap_units")  # D-054
+        if unit == "m":
+            st.caption("Squares are 0.61 × 0.61 m (2 × 2 ft); 1 ft = 0.3048 m.")
+        st.plotly_chart(shot_map(sm, group, unit), width="stretch")
         g = sm[sm.group == group]
         st.write(f"{int(g.shots_after_make.sum()):,} next shots after a make, "
                  f"{int(g.shots_after_miss.sum()):,} after a miss (court bins with 50+ shots).")

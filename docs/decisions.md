@@ -442,3 +442,9 @@ results with their p-values: -0.4 pp (shuffle within game, p = 0.002) and +0.1 p
 quarter, p = 0.464), so the card matches the "no hot hand" finding instead of showing one number
 that could read as a negative streak effect.
 **Status.** Decided by Massimo, 2026-10-16.
+
+### D-054 · 2026-10-16 · Shot map can switch between feet and metres (Massimo)
+**Decision (Massimo).** The shot map has a ft / m switch: court positions, court lines and hover
+labels convert (1 ft = 0.3048 m); the colours are percentage points and do not change. Feet stay the
+default, consistent with D-005.
+**Status.** Decided by Massimo, 2026-10-16.
